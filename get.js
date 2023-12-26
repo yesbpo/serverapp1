@@ -262,7 +262,7 @@ app.all('/api/index', async (req, res) => {
         
        //condicional para determinar si el idMessage ya existe
         
-       fetch('http://localhost:3001/guardar-mensajes', {
+       fetch('http://146.190.143.165:3001/guardar-mensajes', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -294,7 +294,7 @@ app.all('/api/index', async (req, res) => {
     }
      //obtener mensajes
      try {
-      const response = await fetch('http://localhost:3001/obtener-mensajes', {
+      const response = await fetch('http://146.190.143.165:3001/obtener-mensajes', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -323,7 +323,7 @@ app.all('/api/index', async (req, res) => {
       //crear chats
       
       try {
-        const response = await fetch('http://localhost:3001/obtener-chats');
+        const response = await fetch('http://146.190.143.165:3001/obtener-chats');
         const chats = response.json()
         
       let inc = 20; // Inicializa un contador
@@ -338,7 +338,7 @@ app.all('/api/index', async (req, res) => {
           status: 'pending',
           userId: 0,
         };
-        const response = await fetch('http://localhost:3001/crear-chat', {
+        const response = await fetch('http://146.190.143.165:3001/crear-chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -360,7 +360,7 @@ app.all('/api/index', async (req, res) => {
       async function verificarChatExistente(numero) {
       const idChat2 = numero; // Reemplaza esto con el valor real que deseas buscar
       try {
-      const responseChatExistente = await fetch(`http://localhost:3001/obtener-chat-id?idChat2=${idChat2}`, {
+      const responseChatExistente = await fetch(`http://146.190.143.165:3001/obtener-chat-id?idChat2=${idChat2}`, {
       method: 'GET',
       headers: {
       'Content-Type': 'application/json',
@@ -379,7 +379,7 @@ app.all('/api/index', async (req, res) => {
 // Función para distribuir mensajes equitativamente entre usuarios 
       //obtener chats
       try {
-        const response = await fetch('http://localhost:3001/obtener-chats');
+        const response = await fetch('http://146.190.143.165/obtener-chats');
         if (!response.ok) {
           throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
@@ -435,7 +435,7 @@ if (chatsSinUserId.length>1) {
         } else {
       elementoSeleccionado = minimoValorFrecuencia;
       }
-        const response = await fetch('http://localhost:3001/actualizar-usuario-chat', {
+        const response = await fetch('http://146.190.143.165:3001/actualizar-usuario-chat', {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
@@ -481,7 +481,7 @@ if (chatsSinUserId.length>1) {
     // Lógica para un solo elemento
     var indiceAleatorio = Math.floor(Math.random() * idsUactivos.length);
     elementoSeleccionado = idsUactivos[indiceAleatorio];
-    const response = await fetch('http://localhost:3001/actualizar-usuario-chat', {
+    const response = await fetch('http://146.190.143.165:3001/actualizar-usuario-chat', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -505,7 +505,7 @@ if (chatsSinUserId.length>1) {
 }
        //obtener usuarios activos
         try {
-          const response = await fetch('http://localhost:3001/obtener-usuarios', {
+          const response = await fetch('http://146.190.143.165:3001/obtener-usuarios', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
