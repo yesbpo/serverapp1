@@ -310,7 +310,7 @@ app.put('/mensajeenviado', async (req, res) => {
 // actualizar uusario 
 app.put('/actualizar/usuario', async (req, res) => {
   try {
-    const {nuevoDato, usuario  } = req.body;
+    const {nuevoDato, usuario } = req.body;
     // Realiza la actualización en la base de datos
     if (usuario !== undefined && nuevoDato !== undefined) {
       // Realiza la actualización en la base de datos
