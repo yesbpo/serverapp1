@@ -61,7 +61,7 @@ app.put('/actualizar/usuario', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
-
+app.use(cors());
 // Ruta para insertar datos
 app.post('/crear-usuario', async (req, res) => {
   try {
