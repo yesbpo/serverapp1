@@ -65,17 +65,25 @@ app.put('/actualizar/usuario', async (req, res) => {
 // Ruta para insertar datos
 app.post('/crear-usuario', async (req, res) => {
   try {
-    const {type_user, createdAt, updatedAt, email, session, usuario, password, complete_name } = req.body;
+    const { type_user, email, session, usuario, password, complete_name } = req.body;
 
     // Ejecutar la consulta SQL para insertar un nuevo usuario
     const [result] = await promisePool.execute(
       'INSERT INTO User (usuario, password, email, createdAt, updatedAt, session, type_user, complete_name) VALUES (?, ?, ?, NOW(), NOW(), ?, ?, ?)',
-      [type_user, email, , session, usuario, password, complete_name]
+      [usuario, password, email, session, type_user, complete_name]
     );
 
     const nuevoUsuario = {
       id: result.insertId,
-      type_user, createdAt, updatedAt, email, session, usuario, password, complete_name    };
+      type_user,
+      createdAt: result.affectedRows === 1 ? new Date() : null,
+      updatedAt: result.affectedRows === 1 ? new Date() : null,
+      email,
+      session,
+      usuario,
+      password,
+      complete_name,
+    };
 
     res.json({ mensaje: 'Usuario creado con éxito', usuario: nuevoUsuario });
   } catch (error) {
