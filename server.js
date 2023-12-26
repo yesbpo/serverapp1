@@ -154,7 +154,7 @@ app.post('/guardar-mensajes', async (req, res) => {
 app.get('/obtener-mensajes', async (req, res) => {
   try {
     // Ejecutar la consulta SQL para obtener todos los mensajes
-    const [rows] = await promisePool.query('SELECT * FROM mensajes');
+    const [rows] = await promisePool.query('SELECT * FROM Mensaje');
 
     // Enviar los mensajes obtenidos como respuesta
     res.json( rows );
@@ -183,14 +183,14 @@ app.post('/crear-chat', async (req, res) => {
       if (existingResult.length > 0) {
         // Si ya existe, actualiza los demás datos
         await promisePool.execute(
-          'UPDATE Chat SET id = ?, resolved = ?, status = ?, userId = ? WHERE idChat2 = ?',
-          [id, resolved, status, userId, idChat2]
+          'UPDATE Chat SET resolved = ?, status = ?, userId = ? WHERE idChat2 = ?',
+          [ resolved, status, userId, idChat2]
         );
       } else {
         // Si no existe, inserta un nuevo chat
         await promisePool.execute(
-          'INSERT INTO Chat (id, receivedDate, assignedDate, attendedDate, closedDate, resolved, status, userId, idChat, idChat2) VALUES (?, NOW(), null, null, null, ?, ?, ?, null, ?)',
-          [id, resolved, status, userId, idChat2]
+          'INSERT INTO Chat (receivedDate, assignedDate, attendedDate, closedDate, resolved, status, userId, idChat2) VALUES ( NOW(), null, null, null, ?, ?, ?, ?)',
+          [ resolved, status, userId, idChat2]
         );
       }
     }
