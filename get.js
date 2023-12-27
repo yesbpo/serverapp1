@@ -366,7 +366,7 @@ io.on('connection', (socket) => {
 });
 
 // envio mensajes
-app.post('/api/envios', bodyParser.urlencoded({ extended: true }), async (req, res) => {
+app.post('/w/api/envios', bodyParser.urlencoded({ extended: true }), async (req, res) => {
   try {
     const url = apiUrlenvio;
     // Obtenemos la data proporcionada por el cliente
@@ -402,7 +402,7 @@ app.post('/api/envios', bodyParser.urlencoded({ extended: true }), async (req, r
   }
 });
 // Ruta para realizar la solicitud y devolver la respuesta al cliente de los templates
-app.get('/api/templates', async (req, res) => {
+app.get('/w/api/templates', async (req, res) => {
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
