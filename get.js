@@ -47,197 +47,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-// envio mensajes
-app.post('/api/envios', bodyParser.urlencoded({ extended: true }), async (req, res) => {
-  try {
-    const url = apiUrlenvio;
-    // Obtenemos la data proporcionada por el cliente
-    const clientData = req.body;
-    // Construimos la solicitud a la API de Gupshup
-    const formData = new URLSearchParams();
-    Object.entries(clientData).forEach(([key, value]) => {
-      formData.append(key, value);
-    });
-    const headers = {
-      'Cache-Control': 'no-cache',
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'apikey': apiKey,
-    };
-    // Hacemos la solicitud a la API de Gupshup
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: formData,
-    });
-    // Manejamos la respuesta del servidor Gupshup
-    if (response.ok) {
-      const responseData = await response.json();
-      console.log('Respuesta del servidor Gupshup:', responseData);
-      // Enviamos la respuesta al cliente
-      res.json(responseData);
-    } else {
-      throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
-    }
-  } catch (error) {
-    console.error('Error al procesar la solicitud:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-// Ruta para realizar la solicitud y devolver la respuesta al cliente de los templates
-app.get('/api/templates', async (req, res) => {
-  try {
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'apikey': apiKey,
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log('Response:', data.templates);
-    res.json(data.templates); // Devolver la respuesta al cliente
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
-  }
-});
-//solicitud de usuarios activos en gupshup
-app.get('/api/users', async (req, res) => {
-  try {
-    const response = await fetch(apiUrluser, {
-      method: 'GET',
-      headers: {
-        'apikey': apiKey,
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log('Response:', data);
-    res.json(data); // Devolver la respuesta al cliente
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
-  }
-});
-//generar partner token
-// Ruta para manejar la petición POST
-app.post('/partner/account/login', async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const response = await fetch(apiUrlPartnertoken, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('Respuesta exitosa:', data);
-  // Aquí puedes realizar acciones con los datos, como autenticación y obtención del token
-    // Por ahora, simplemente respondemos con los datos recibidos
-    res.json({ email, password });
-  } catch (error) {
-    // Manejar errores aquí
-    console.error('Error al realizar la solicitud:', error);
-    res.status(500).json({ error: 'Error al realizar la solicitud' });
-  }
-});
-// Middleware para parsear el cuerpo de la solicitud como JSON
-app.use(express.json());
-// Ejemplo de configuración en Express
-app.use((req, res, next) => {
-  // Configuración de CORS en tu servidor WebSocket
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'ALL');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
-//Post templates
-app.post('/createTemplates', async (req, res) => {
-  try {
-    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90'; // Reemplaza con tu ID de aplicación real
-    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa'; // Reemplaza con tu token de partner real
-    const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/templates`;
-
-    const templateData = req.body; // Los datos de la plantilla provienen del cuerpo de la solicitud
-
-    const response = await axios.post(apiUrl, templateData, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Connection': 'keep-alive',
-        'token': partnerAppToken,
-      },
-    });
-    
-
-    console.log('Response Status:', response.status);
-    console.log('Response Data:', response.data);
-
-    res.status(response.status).json(response.data);
-  } catch (error) {
-    console.error('Error:', error.message || error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-// Get templates
-app.get('/gupshup-templates', async (req, res) => {
-  try {
-    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
-    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
-    const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/templates`;
-
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'Connection': 'keep-alive',
-        'token': partnerAppToken,
-      },
-    });
-
-    const data = await response.json();
-    res.json(data);
-  } catch (error) {
-    console.error('Error:', error.message || error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
-//DELETE TEMPLATES
-app.delete('/deleteTemplate/:elementName', async (req, res) => {
-  try {
-    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
-    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
-    const elementName = req.params.elementName;
-
-    const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/template/${elementName}?id=${elementName}`;
-
-    const response = await axios.delete(apiUrl, {
-      headers: {
-        Authorization: partnerAppToken,
-      },
-    });
-
-    console.log('Response Status:', response.status);
-    console.log('Response Data:', response.data);
-
-    res.status(response.status).json(response.data);
-  } catch (error) {
-    console.error('Error:', error.message || error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 // Ruta para recibir eventos del webhook
 app.all('/api/index', async (req, res) => {
   const userAgent = req.get('User-Agent');
@@ -546,6 +355,198 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('Cliente desconectado');
   });
+});
+
+// envio mensajes
+app.post('/api/envios', bodyParser.urlencoded({ extended: true }), async (req, res) => {
+  try {
+    const url = apiUrlenvio;
+    // Obtenemos la data proporcionada por el cliente
+    const clientData = req.body;
+    // Construimos la solicitud a la API de Gupshup
+    const formData = new URLSearchParams();
+    Object.entries(clientData).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    const headers = {
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'apikey': apiKey,
+    };
+    // Hacemos la solicitud a la API de Gupshup
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: headers,
+      body: formData,
+    });
+    // Manejamos la respuesta del servidor Gupshup
+    if (response.ok) {
+      const responseData = await response.json();
+      console.log('Respuesta del servidor Gupshup:', responseData);
+      // Enviamos la respuesta al cliente
+      res.json(responseData);
+    } else {
+      throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error('Error al procesar la solicitud:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+// Ruta para realizar la solicitud y devolver la respuesta al cliente de los templates
+app.get('/api/templates', async (req, res) => {
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'apikey': apiKey,
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('Response:', data.templates);
+    res.json(data.templates); // Devolver la respuesta al cliente
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+//solicitud de usuarios activos en gupshup
+app.get('/api/users', async (req, res) => {
+  try {
+    const response = await fetch(apiUrluser, {
+      method: 'GET',
+      headers: {
+        'apikey': apiKey,
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log('Response:', data);
+    res.json(data); // Devolver la respuesta al cliente
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+//generar partner token
+// Ruta para manejar la petición POST
+app.post('/partner/account/login', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const response = await fetch(apiUrlPartnertoken, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('Respuesta exitosa:', data);
+  // Aquí puedes realizar acciones con los datos, como autenticación y obtención del token
+    // Por ahora, simplemente respondemos con los datos recibidos
+    res.json({ email, password });
+  } catch (error) {
+    // Manejar errores aquí
+    console.error('Error al realizar la solicitud:', error);
+    res.status(500).json({ error: 'Error al realizar la solicitud' });
+  }
+});
+// Middleware para parsear el cuerpo de la solicitud como JSON
+app.use(express.json());
+// Ejemplo de configuración en Express
+app.use((req, res, next) => {
+  // Configuración de CORS en tu servidor WebSocket
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'ALL');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
+//Post templates
+app.post('/createTemplates', async (req, res) => {
+  try {
+    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90'; // Reemplaza con tu ID de aplicación real
+    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa'; // Reemplaza con tu token de partner real
+    const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/templates`;
+
+    const templateData = req.body; // Los datos de la plantilla provienen del cuerpo de la solicitud
+
+    const response = await axios.post(apiUrl, templateData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Connection': 'keep-alive',
+        'token': partnerAppToken,
+      },
+    });
+    
+
+    console.log('Response Status:', response.status);
+    console.log('Response Data:', response.data);
+
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error('Error:', error.message || error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Get templates
+app.get('/gupshup-templates', async (req, res) => {
+  try {
+    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
+    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
+    const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/templates`;
+
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Connection': 'keep-alive',
+        'token': partnerAppToken,
+      },
+    });
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error('Error:', error.message || error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+//DELETE TEMPLATES
+app.delete('/deleteTemplate/:elementName', async (req, res) => {
+  try {
+    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
+    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
+    const elementName = req.params.elementName;
+
+    const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/template/${elementName}?id=${elementName}`;
+
+    const response = await axios.delete(apiUrl, {
+      headers: {
+        Authorization: partnerAppToken,
+      },
+    });
+
+    console.log('Response Status:', response.status);
+    console.log('Response Data:', response.data);
+
+    res.status(response.status).json(response.data);
+  } catch (error) {
+    console.error('Error:', error.message || error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
 // Iniciar el servidor
