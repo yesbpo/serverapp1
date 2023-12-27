@@ -117,6 +117,11 @@ app.post('/db/guardar-mensajes', async (req, res) => {
   try {
     const { content, type_comunication, status, number, timestamp, type_message, idMessage } = req.body;
 
+    // Validar que todos los campos requeridos estén presentes
+    if (!content || !type_comunication || !status || !number || !timestamp || !type_message || !idMessage) {
+      return res.status(400).json({ error: 'Faltan datos requeridos para guardar el mensaje.' });
+    }
+
     // Verificar si ya existe un mensaje con el mismo idMessage
     const [existingResult] = await promisePool.execute(
       'SELECT * FROM mensajes WHERE idMessage = ?',
@@ -140,13 +145,12 @@ app.post('/db/guardar-mensajes', async (req, res) => {
     } else {
       // Si no existe, inserta un nuevo mensaje
       const [insertResult] = await promisePool.execute(
-        'INSERT INTO mensajes (content, type_comunication, status, number, timestamp, type_message, idMessage) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [content, type_comunication, status, number, timestamp, type_message, idMessage]
+        'INSERT INTO mensajes (idMessage, content, type_comunication, status, number, timestamp, type_message) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [idMessage, content, type_comunication, status, number, timestamp, type_message]
       );
 
       const nuevoMensaje = {
-        id: insertResult.insertId,
-        content, type_comunication, status, number, timestamp, type_message, idMessage
+        idMessage, content, type_comunication, status, number, timestamp, type_message
       };
 
       res.json({ mensaje: 'Mensaje guardado con éxito', usuario: nuevoMensaje });
@@ -155,8 +159,7 @@ app.post('/db/guardar-mensajes', async (req, res) => {
     console.error('Error al guardar o actualizar el mensaje en la base de datos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
-});
-//obtener mensajes
+});//obtener mensajes
 
 app.get('/db/obtener-mensajes', async (req, res) => {
   try {

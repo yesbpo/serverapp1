@@ -58,22 +58,29 @@ app.all('/w/api/index', async (req, res) => {
       await processAsync(data);
       var data = req.body;
       console.log(data)
-        
+      const number = data.payload.source || data.payload.destination;
+      const content = data.payload.payload.text || data.payload.payload.url;
+      const type_comunication = data.type;
+      const status = data.payload.type || 'null';
+      const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      const type_message = data.payload.type;
+      const idMessage = data.payload.id;
        //condicional para determinar si el idMessage ya existe
-        
+       const mensaje = {
+        idMessage,
+        content,
+        type_comunication,
+        number,
+        timestamp,
+        status,
+        type_message
+      };
        fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify({  // Acceder a los valores de source, destination y content
-    number : data.payload.source || data.payload.destination ,
-    content : data.payload.payload.text || data.payload.payload.url,
-    type_comunication :data.type,
-    status : data.payload.type   || 'null',
-    timestamp : new Date().toISOString().slice(0, 19).replace('T', ' '),
-    type_message : data.payload.type ,
-    idMessage : data.payload.id}
+  body: JSON.stringify(mensaje
   ),
 })
   .then((response) => {
