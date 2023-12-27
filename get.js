@@ -23,7 +23,7 @@ const apiUrluser = 'https://api.gupshup.io/sm/api/v1/users/Pb1yes';
 const apiUrlPartnertoken = 'https://partner.gupshup.io/partner/account/login';
 app.use(cors({ origin: '*' }));
 // conexion crud base de datos
-app.options('/crear-datos', (req, res) => {
+app.options('/w/crear-datos', (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.status(200).send();
@@ -48,7 +48,7 @@ const upload = multer({ storage: storage });
 
 
 // Ruta para recibir eventos del webhook
-app.all('/api/index', async (req, res) => {
+app.all('/w/api/index', async (req, res) => {
   const userAgent = req.get('User-Agent');
   // Verifica si la solicitud es del User-Agent específico
   if (userAgent) {
@@ -60,7 +60,7 @@ app.all('/api/index', async (req, res) => {
         
        //condicional para determinar si el idMessage ya existe
         
-       fetch('http://146.190.143.165:3001/guardar-mensajes', {
+       fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ app.all('/api/index', async (req, res) => {
     }
      //obtener mensajes
      try {
-      const response = await fetch('http://146.190.143.165:3001/obtener-mensajes', {
+      const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-mensajes', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -129,7 +129,7 @@ app.all('/api/index', async (req, res) => {
       //crear chats
       
       try {
-        const response = await fetch('http://146.190.143.165:3001/obtener-chats');
+        const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
         const chats = response.json()
         
       let inc = 20; // Inicializa un contador
@@ -144,7 +144,7 @@ app.all('/api/index', async (req, res) => {
           status: 'pending',
           userId: 0,
         };
-        const response = await fetch('http://146.190.143.165:3001/crear-chat', {
+        const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -166,7 +166,7 @@ app.all('/api/index', async (req, res) => {
       async function verificarChatExistente(numero) {
       const idChat2 = numero; // Reemplaza esto con el valor real que deseas buscar
       try {
-      const responseChatExistente = await fetch(`http://146.190.143.165:3001/obtener-chat-id?idChat2=${idChat2}`, {
+      const responseChatExistente = await fetch(`https://appcenteryes.appcenteryes.com/db/obtener-chat-id?idChat2=${idChat2}`, {
       method: 'GET',
       headers: {
       'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ app.all('/api/index', async (req, res) => {
 // Función para distribuir mensajes equitativamente entre usuarios 
       //obtener chats
       try {
-        const response = await fetch('http://146.190.143.165/obtener-chats');
+        const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
         if (!response.ok) {
           throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
@@ -197,7 +197,7 @@ app.all('/api/index', async (req, res) => {
         const idsChatsinasignar = chatsSinUserId.map(objeto => objeto.userId);
         const idsChats =  idsChatasignados.concat(idsChatsinasignar);
         const chatsParaAsignar = idsChats.filter(value => value !== null && value !== 0);
-        const responseUsuarios = await fetch('http://localhost:3001/obtener-usuarios');
+        const responseUsuarios = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-usuarios');
         const usuarios = await responseUsuarios.json();   
         const usuariosActivos = usuarios.filter((usuario) => usuario.session === 'Activo' && usuario.type_user ==='Asesor');
         const idsUactivos = usuariosActivos.map(objeto => objeto.id);
@@ -241,7 +241,7 @@ if (chatsSinUserId.length>1) {
         } else {
       elementoSeleccionado = minimoValorFrecuencia;
       }
-        const response = await fetch('http://146.190.143.165:3001/actualizar-usuario-chat', {
+        const response = await fetch('https://appcenteryes.appcenteryes.com/db/actualizar-usuario-chat', {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',
@@ -287,7 +287,7 @@ if (chatsSinUserId.length>1) {
     // Lógica para un solo elemento
     var indiceAleatorio = Math.floor(Math.random() * idsUactivos.length);
     elementoSeleccionado = idsUactivos[indiceAleatorio];
-    const response = await fetch('http://146.190.143.165:3001/actualizar-usuario-chat', {
+    const response = await fetch('https://appcenteryes.appcenteryes.com/db/actualizar-usuario-chat', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -311,7 +311,7 @@ if (chatsSinUserId.length>1) {
 }
        //obtener usuarios activos
         try {
-          const response = await fetch('http://146.190.143.165:3001/obtener-usuarios', {
+          const response = await fetch('http://https://appcenteryes.appcenteryes.com/db/obtener-usuarios', {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
@@ -414,7 +414,7 @@ app.get('/api/templates', async (req, res) => {
   }
 });
 //solicitud de usuarios activos en gupshup
-app.get('/api/users', async (req, res) => {
+app.get('/w/api/users', async (req, res) => {
   try {
     const response = await fetch(apiUrluser, {
       method: 'GET',
@@ -436,7 +436,7 @@ app.get('/api/users', async (req, res) => {
 });
 //generar partner token
 // Ruta para manejar la petición POST
-app.post('/partner/account/login', async (req, res) => {
+app.post('/w/partner/account/login', async (req, res) => {
   const { email, password } = req.body;
   try {
     const response = await fetch(apiUrlPartnertoken, {
@@ -474,7 +474,7 @@ app.use((req, res, next) => {
 });
 
 //Post templates
-app.post('/createTemplates', async (req, res) => {
+app.post('/w/createTemplates', async (req, res) => {
   try {
     const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90'; // Reemplaza con tu ID de aplicación real
     const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa'; // Reemplaza con tu token de partner real
@@ -502,7 +502,7 @@ app.post('/createTemplates', async (req, res) => {
 });
 
 // Get templates
-app.get('/gupshup-templates', async (req, res) => {
+app.get('/w/gupshup-templates', async (req, res) => {
   try {
     const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
     const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
@@ -525,7 +525,7 @@ app.get('/gupshup-templates', async (req, res) => {
 });
 
 //DELETE TEMPLATES
-app.delete('/deleteTemplate/:elementName', async (req, res) => {
+app.delete('/w/deleteTemplate/:elementName', async (req, res) => {
   try {
     const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
     const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';

@@ -10,7 +10,7 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
-app.options('/crear-datos', (req, res) => {
+app.options('/db/crear-datos', (req, res) => {
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   res.status(200).send();
@@ -93,8 +93,8 @@ app.post('db/crear-usuario', async (req, res) => {
 });
 // ruta de crear mensajes
 
-app.use('/guardar-mensajes', cors());
-app.get('/obtener-mensajes-fecha', async (req, res) => {
+app.use('/db/guardar-mensajes', cors());
+app.get('/db/obtener-mensajes-fecha', async (req, res) => {
   try {
     const { fechaInicio, fechaFin } = req.query;
 
@@ -113,7 +113,7 @@ app.get('/obtener-mensajes-fecha', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
-app.post('/guardar-mensajes', async (req, res) => {
+app.post('/db/guardar-mensajes', async (req, res) => {
   try {
     const { content, type_comunication, status, number, timestamp, type_message, idMessage } = req.body;
 
@@ -158,7 +158,7 @@ app.post('/guardar-mensajes', async (req, res) => {
 });
 //obtener mensajes
 
-app.get('/obtener-mensajes', async (req, res) => {
+app.get('/db/obtener-mensajes', async (req, res) => {
   try {
     // Ejecutar la consulta SQL para obtener todos los mensajes
     const [rows] = await promisePool.query('SELECT * FROM Mensaje');
@@ -171,7 +171,7 @@ app.get('/obtener-mensajes', async (req, res) => {
   }
 });
 // crear chats 
-app.post('/crear-chat', async (req, res) => {
+app.post('/db/crear-chat', async (req, res) => {
   try {
     const chatsData = req.body;
 
@@ -209,7 +209,7 @@ app.post('/crear-chat', async (req, res) => {
   }
 });
 // Ruta para actualizar el userId de un chat por idChat2
-app.put('/actualizar-usuario-chat', async (req, res) => {
+app.put('/db/actualizar-usuario-chat', async (req, res) => {
   try {
     const idChat2 = req.body.idChat2; // Se espera que el idChat2 sea proporcionado en el cuerpo de la solicitud
     const nuevoUserId = req.body.nuevoUserId; // Nuevo valor de userId que se proporcionará en el cuerpo de la solicitud
@@ -230,7 +230,7 @@ app.put('/actualizar-usuario-chat', async (req, res) => {
   }
 });
 // actualizar estado del chat 
-app.put('/actualizar-estado-chat', async (req, res) => {
+app.put('/db/actualizar-estado-chat', async (req, res) => {
   try {
     const idChat2 = req.body.idChat2; // Se espera que el idChat2 sea proporcionado en el cuerpo de la solicitud
     const nuevoEstado = req.body.nuevoEstado; // Nuevo valor de userId que se proporcionará en el cuerpo de la solicitud
@@ -254,7 +254,7 @@ app.put('/actualizar-estado-chat', async (req, res) => {
 // buscar chat por id 
 // Supongamos que 'pool' es tu conexión a la base de datos
 
-app.get('/obtener-chat-id', async (req, res) => {
+app.get('/db/obtener-chat-id', async (req, res) => {
   try {
     const idChat2 = req.query.idChat2;
 
@@ -274,7 +274,7 @@ app.get('/obtener-chat-id', async (req, res) => {
   }
 });
 // Ruta para obtener todos los chats
-app.get('/obtener-chats', async (req, res) => {
+app.get('/db/obtener-chats', async (req, res) => {
   try {
     // Obtener todos los chats de la base de datos
     const [rows] = await promisePool.execute('SELECT * FROM Chat');
@@ -291,7 +291,7 @@ app.get('/obtener-chats', async (req, res) => {
 });
 
 // actualizar mensajes 
-app.put('/mensajeenviado', async (req, res) => {
+app.put('/db/mensajeenviado', async (req, res) => {
   try {
     const {content, idMessage} = req.body;
     // Realiza la actualización en la base de datos
@@ -315,7 +315,7 @@ app.put('/mensajeenviado', async (req, res) => {
   }
 });
 // actualizar uusario 
-app.put('/actualizar/usuario', async (req, res) => {
+app.put('/db/actualizar/usuario', async (req, res) => {
   try {
     const {nuevoDato, usuario } = req.body;
     // Realiza la actualización en la base de datos
@@ -340,7 +340,7 @@ app.put('/actualizar/usuario', async (req, res) => {
 });
 
 // actualizar estado del mensaje
-app.put('/mensajestatus', async (req, res) => {
+app.put('/db/mensajestatus', async (req, res) => {
   try {
     const {status, idMessage} = req.body;
     // Realiza la actualización en la base de datos
@@ -365,7 +365,7 @@ app.put('/mensajestatus', async (req, res) => {
 });
 
 //obtener usuaios
-app.get('/obtener-usuarios', async (req, res) => {
+app.get('/db/obtener-usuarios', async (req, res) => {
   try {
     const [rows] = await promisePool.query('SELECT * FROM User');
     res.json(rows);
@@ -379,7 +379,7 @@ app.listen(PORT, () => {
   console.log(`Servidor Express en ejecución en el puerto ${PORT}`);
 });
 //por id
-app.get('/usuarios/:id', (req, res) => {
+app.get('/db/usuarios/:id', (req, res) => {
   const userId = req.params.id;
 
   // Consultar el usuario en la base de datos
