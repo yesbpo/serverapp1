@@ -60,21 +60,21 @@ app.all('/api/index', async (req, res) => {
         
        //condicional para determinar si el idMessage ya existe
         
-       fetch('http://146.190.143.165:3001/guardar-mensajes', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({  // Acceder a los valores de source, destination y content
-    number : data.payload.source || data.payload.destination ,
-    content : data.payload.payload.text || data.payload.payload.url,
-    type_comunication :data.type,
-    status : data.payload.type   || 'null',
-    timestamp : new Date().toISOString().slice(0, 19).replace('T', ' '),
-    type_message : data.payload.type ,
-    idMessage : data.payload.id}
-  ),
-})
+      // fetch('http://146.190.143.165:3001/guardar-mensajes', {
+  //method: 'POST',
+  //headers: {
+   // 'Content-Type': 'application/json',
+  //},
+  //body: JSON.stringify({  // Acceder a los valores de source, destination y content
+   // number : data.payload.source || data.payload.destination ,
+   // content : data.payload.payload.text || data.payload.payload.url,
+   // type_comunication :data.type,
+   // status : data.payload.type   || 'null',
+   // timestamp : new Date().toISOString().slice(0, 19).replace('T', ' '),
+    //type_message : data.payload.type ,
+   // idMessage : data.payload.id}
+  //),
+//})
   .then((response) => {
     if (!response.ok) {
       throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
