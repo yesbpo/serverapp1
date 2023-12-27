@@ -57,14 +57,6 @@ app.all('/api/index', async (req, res) => {
       await processAsync(data);
       var data = req.body;
       console.log(data)
-      const mensaje = {  // Acceder a los valores de source, destination y content
-        number : data.payload.source || data.payload.destination ,
-        content : data.payload.payload.text || data.payload.payload.url,
-        type_comunication :data.type,
-        status : data.payload.type   || 'null',
-        timestamp : new Date().toISOString().slice(0, 19).replace('T', ' '),
-        type_message : data.payload.type ,
-        idMessage : data.payload.id}
         
        //condicional para determinar si el idMessage ya existe
         
@@ -73,7 +65,15 @@ app.all('/api/index', async (req, res) => {
   headers: {
     'Content-Type': 'application/json',
   },
-  body: JSON.stringify(mensaje),
+  body: JSON.stringify({  // Acceder a los valores de source, destination y content
+    number : data.payload.source || data.payload.destination ,
+    content : data.payload.payload.text || data.payload.payload.url,
+    type_comunication :data.type,
+    status : data.payload.type   || 'null',
+    timestamp : new Date().toISOString().slice(0, 19).replace('T', ' '),
+    type_message : data.payload.type ,
+    idMessage : data.payload.id}
+  ),
 })
   .then((response) => {
     if (!response.ok) {
