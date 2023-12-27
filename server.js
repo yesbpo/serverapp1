@@ -301,7 +301,7 @@ app.put('/db/mensajeenviado', async (req, res) => {
     if (idMessage !== undefined && content !== undefined) {
       // Realiza la actualización en la base de datos
       const [result] = await promisePool.execute(
-        'UPDATE mensajes SET content = ? WHERE idMessage = ?',
+        'UPDATE Mensaje SET content = ? WHERE idMessage = ?',
         [content, idMessage]
       );  
     // Verifica si se realizó la actualización correctamente
@@ -350,7 +350,7 @@ app.put('/db/mensajestatus', async (req, res) => {
     if (idMessage !== undefined && status !== undefined) {
       // Realiza la actualización en la base de datos
       const [result] = await promisePool.execute(
-        'UPDATE mensajes SET status = ? WHERE idMessage = ?',
+        'UPDATE Mensaje SET status = ? WHERE idMessage = ?',
         [status, idMessage]
       );  
     // Verifica si se realizó la actualización correctamente
