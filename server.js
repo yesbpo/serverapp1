@@ -145,7 +145,7 @@ app.post('/db/guardar-mensajes', async (req, res) => {
     } else {
       // Si no existe, inserta un nuevo mensaje
       const [insertResult] = await promisePool.execute(
-        'INSERT INTO mensajes (idMessage, content, type_comunication, status, number, timestamp, type_message) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO Mensaje (idMessage, content, type_comunication, status, number, timestamp, type_message) VALUES (?, ?, ?, ?, ?, ?, ?)',
         [idMessage, content, type_comunication, status, number, timestamp, type_message]
       );
 
