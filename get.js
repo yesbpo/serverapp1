@@ -140,13 +140,13 @@ app.all('/w/api/index', async (req, res) => {
         const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
         const chats = response.json()
         
-      let inc = 20; // Inicializa un contador
+       // Inicializa un contador
       for (const numeroUnico of numerosUnicos) {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
         if(!chatExistente){
         const data = {
-          id: inc++, // Asigna el valor actual del contador y luego incrementa
+           // Asigna el valor actual del contador y luego incrementa
           idChat2:numeroNormalizado ,
           resolved: false,
           status: 'pending',
