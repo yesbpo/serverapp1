@@ -547,17 +547,16 @@ app.delete('/w/deleteTemplate/:elementName', async (req, res) => {
       },
     });
 
-    console.log('Response Status:', response.status);
-    console.log('Response Data:', response.data);
+    
 
     res.status(response.status).json(response.data);
   } catch (error) {
-    console.error('Error:', error.message || error);
+    
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
 // Iniciar el servidor
 server.listen(port, () => {
-  console.log(`Servidor y Socket.IO escuchando`);
+  
 });

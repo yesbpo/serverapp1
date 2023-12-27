@@ -249,8 +249,8 @@ app.put('/db/actualizar-estado-chat', async (req, res) => {
       res.status(404).json({ error: 'Chat no encontrado' });
     }
   } catch (error) {
-    console.error('Error al actualizar el usuario del chat:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    
+    res.status(500).json({ error: 'Error al actualizar el usuario del chat' });
   }
 });
 
@@ -272,8 +272,8 @@ app.get('/db/obtener-chat-id', async (req, res) => {
       res.status(404).json({ error: 'Chat no encontrado' });
     }
   } catch (error) {
-    console.error('Error al obtener el chat por ID:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    
+    res.status(500).json({ error: 'Error al obtener el chat por ID' });
   }
 });
 // Ruta para obtener todos los chats
@@ -288,8 +288,7 @@ app.get('/db/obtener-chats', async (req, res) => {
       res.json({ mensaje: 'No hay chats disponibles en la base de datos' });
     }
   } catch (error) {
-    console.error('Error al obtener los chats:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({ error: 'Error al obtener los chats' });
   }
 });
 
@@ -306,14 +305,14 @@ app.put('/db/mensajeenviado', async (req, res) => {
       );  
     // Verifica si se realizó la actualización correctamente
     if (result.affectedRows > 0) {
-      console.log('mensaje actualizado correctamente.');
+    
       res.status(200).json({ mensaje: 'mensaje actualizado correctamente.' });
     } else {
-      console.log('No se encontró el mensaje para actualizar.');
+    
       res.status(404).json({ error: 'mensaje no encontrado.' });
     }}
   } catch (error) {
-    console.error('Error al actualizar el mensaje:', error);
+    
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
@@ -330,14 +329,14 @@ app.put('/db/actualizar/usuario', async (req, res) => {
       );  
     // Verifica si se realizó la actualización correctamente
     if (result.affectedRows > 0) {
-      console.log('Usuario actualizado correctamente.');
+      
       res.status(200).json({ mensaje: 'Usuario actualizado correctamente.' });
     } else {
-      console.log('No se encontró el usuario para actualizar.');
+      
       res.status(404).json({ error: 'Usuario no encontrado.' });
     }}
   } catch (error) {
-    console.error('Error al actualizar el usuario:', error);
+    
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
