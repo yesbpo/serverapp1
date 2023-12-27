@@ -124,7 +124,7 @@ app.post('/db/guardar-mensajes', async (req, res) => {
 
     // Verificar si ya existe un mensaje con el mismo idMessage
     const [existingResult] = await promisePool.execute(
-      'SELECT * FROM mensajes WHERE idMessage = ?',
+      'SELECT * FROM Mensaje WHERE idMessage = ?',
       [idMessage]
     );
 
