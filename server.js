@@ -199,7 +199,7 @@ app.post('/db/crear-chat', async (req, res) => {
       } else {
         // Si no existe, inserta un nuevo chat
         await promisePool.execute(
-          'INSERT INTO Chat (receivedDate, assignedDate, attendedDate, closedDate, resolved, status, userId, idChat2) VALUES ( NOW(), null, null, null, ?, ?, ?, ?)',
+          'INSERT INTO Chat (receivedDate, assignedDate, attendedDate, closedDate, resolved, status, userId, idChat2) VALUES ( NOW(), NOW(), null, null, ?, ?, ?, ?)',
           [ resolved, status, userId, idChat2]
         );
       }
