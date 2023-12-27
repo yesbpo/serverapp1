@@ -1,3 +1,4 @@
+// sdsdghfehefdhsdgfhgesdhdgjdgjdgjdg
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -21,7 +22,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Ruta '/api/index'
-app.all('/api/index', async (req, res) => {
+app.all('/w/api/index', async (req, res) => {
   try {
     // Verifica si la solicitud es del User-Agent específico
     const userAgent = req.get('User-Agent');
