@@ -38,7 +38,7 @@ const promisePool = pool.promise();
 // Función para insertar datos en la base de datos
 
 //crearsession
-app.put('/actualizar/usuario', async (req, res) => {
+app.put('/db/actualizar/usuario', async (req, res) => {
   try {
     const {nuevoDato, usuario  } = req.body;
     // Realiza la actualización en la base de datos
@@ -63,7 +63,7 @@ app.put('/actualizar/usuario', async (req, res) => {
 });
 app.use(cors());
 // Ruta para insertar datos
-app.post('/crear-usuario', async (req, res) => {
+app.post('db/crear-usuario', async (req, res) => {
   try {
     const { type_user, email, session, usuario, password, complete_name } = req.body;
 
