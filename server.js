@@ -131,7 +131,7 @@ app.post('/db/guardar-mensajes', async (req, res) => {
     if (existingResult.length > 0) {
       // Si ya existe, actualiza los demás datos
       const [updateResult] = await promisePool.execute(
-        'UPDATE mensajes SET content = ?, type_comunication = ?, status = ?, number = ?, timestamp = ?, type_message = ? WHERE idMessage = ?',
+        'UPDATE Mensaje SET content = ?, type_comunication = ?, status = ?, number = ?, timestamp = ?, type_message = ? WHERE idMessage = ?',
         [content, type_comunication, status, number, timestamp, type_message, idMessage]
       );
 
