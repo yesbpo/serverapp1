@@ -46,9 +46,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.post('/upload', upload.single('archivo'), (req, res) => {
-  res.json({ url: `http://localhost:3000/uploads/${req.file.filename}` });
-});
 
 // envio mensajes
 app.post('/api/envios', bodyParser.urlencoded({ extended: true }), async (req, res) => {
