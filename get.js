@@ -85,8 +85,7 @@ app.all('/w/api/index', async (req, res) => {
 })
   .then((response) => {
     if (!response.ok) {
-      throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
-    }
+       }
     return response.json();
   })
   .then((data) => {
