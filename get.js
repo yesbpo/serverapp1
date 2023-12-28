@@ -148,7 +148,7 @@ app.all('/w/api/index', async (req, res) => {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
         console.log(chatExistente);
-        if(!chatExistente){
+        
         const data = {
            // Asigna el valor actual del contador y luego incrementa
           idChat2:numeroNormalizado ,
@@ -172,7 +172,7 @@ app.all('/w/api/index', async (req, res) => {
         
         
       }
-    } catch (error) {
+     catch (error) {
       }
       //validar chats existentes para no repetirlos
       async function verificarChatExistente(numero) {
