@@ -234,7 +234,7 @@ if (chatsSinUserId.length>1) {
 
         // Obtén las frecuencias del valor mínimo
         var frecuenciasMinimas = frecuenciaNumeros[minimoValorFrecuencia];
-        
+        console.log
         // Si hay más de una frecuencia mínima, selecciona un valor al azar
         let elementosSeleccionados = [];
         if (frecuenciasMinimas > 1) {
@@ -278,7 +278,8 @@ if (chatsSinUserId.length>1) {
         
           // Uso de la función
           const idChat2 = chat.idChat2;// Reemplaza con el idChat2 correcto
-          const nuevoUserId = elementoSeleccionado; // Reemplaza con el nuevo valor de userId
+          const nuevoUserId = idsUactivos[Math.floor(Math.random() * idsUactivos.length)]; // Reemplaza con el nuevo valor de userId
+          
           try {
         
             const resultadoActualizacion = await actualizarUsuarioChat(idChat2, nuevoUserId);
