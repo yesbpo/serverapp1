@@ -147,6 +147,7 @@ app.all('/w/api/index', async (req, res) => {
       for (const numeroUnico of numerosUnicos) {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
+        console.log(chatExistente);
         if(!chatExistente){
         const data = {
            // Asigna el valor actual del contador y luego incrementa
