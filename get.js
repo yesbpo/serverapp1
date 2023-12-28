@@ -164,10 +164,10 @@ app.all('/w/api/index', async (req, res) => {
           body: JSON.stringify(data),
         });
         if (!response.ok) {
-         
+          console.log('no exito')       
         }
         const responseData = await response.json();
-  
+  console.log('exito')
         }
         
         
