@@ -192,15 +192,16 @@ app.post('/db/crear-chat', async (req, res) => {
 
       if (existingResult.length > 0) {
         // Si ya existe, actualiza los demás datos
+        const updatedStatus = status === 'closed' ? 'pending' : status; // Establecer el estado por defecto si es 'closed'
         await promisePool.execute(
           'UPDATE Chat SET resolved = ?, status = ?, userId = ? WHERE idChat2 = ?',
-          [ resolved, status, userId, idChat2]
+          [resolved, updatedStatus, userId, idChat2]
         );
       } else {
         // Si no existe, inserta un nuevo chat
         await promisePool.execute(
           'INSERT INTO Chat (receivedDate, assignedDate, attendedDate, closedDate, resolved, status, userId, idChat2) VALUES ( NOW(), NOW(), null, null, ?, ?, ?, ?)',
-          [ resolved, status, userId, idChat2]
+          [resolved, status, userId, idChat2]
         );
       }
     }
@@ -217,10 +218,27 @@ app.put('/db/actualizar-usuario-chat', async (req, res) => {
     const idChat2 = req.body.idChat2; // Se espera que el idChat2 sea proporcionado en el cuerpo de la solicitud
     const nuevoUserId = req.body.nuevoUserId; // Nuevo valor de userId que se proporcionará en el cuerpo de la solicitud
 
-    // Realiza la consulta SQL para actualizar el userId del chat por idChat2
-    const [result] = await promisePool.execute('UPDATE Chat SET userId = ?, assignedDate = NOW() WHERE idChat2 = ?', [nuevoUserId, idChat2]);
+    // Obtener el estado actual del chat
+    const [chatResult] = await promisePool.execute('SELECT status FROM Chat WHERE idChat2 = ?', [idChat2]);
 
-    if (result.affectedRows > 0) {
+    if (chatResult.length === 0) {
+      // Si no se encuentra el chat, devolver un mensaje de error
+      res.status(404).json({ error: 'Chat no encontrado' });
+      return;
+    }
+
+    const chatStatus = chatResult[0].status;
+
+    // Validar que el estado del chat sea 'pending' antes de continuar
+    if (chatStatus !== 'pending') {
+      res.status(400).json({ error: 'No se puede asignar un chat que no está en estado "pending"' });
+      return;
+    }
+
+    // Realiza la consulta SQL para actualizar el userId del chat por idChat2
+    const [updateResult] = await promisePool.execute('UPDATE Chat SET userId = ?, assignedDate = NOW() WHERE idChat2 = ?', [nuevoUserId, idChat2]);
+
+    if (updateResult.affectedRows > 0) {
       // Si se actualiza con éxito, devolver una respuesta exitosa
       res.json({ success: true, message: 'Usuario del chat actualizado correctamente' });
     } else {
@@ -237,9 +255,21 @@ app.put('/db/actualizar-estado-chat', async (req, res) => {
   try {
     const idChat2 = req.body.idChat2; // Se espera que el idChat2 sea proporcionado en el cuerpo de la solicitud
     const nuevoEstado = req.body.nuevoEstado; // Nuevo valor de userId que se proporcionará en el cuerpo de la solicitud
+    const nuevoUserId = req.body.nuevoUserId; // Nuevo valor de userId que se proporcionará en el cuerpo de la solicitud (puede ser undefined)
+
+    // Construye la consulta SQL base sin el campo userId
+    let sqlQuery = 'UPDATE Chat SET status = ? WHERE idChat2 = ?';
+    const sqlParams = [nuevoEstado, idChat2];
+
+    // Verifica si se proporciona un nuevo valor para userId en la solicitud
+    if (typeof nuevoUserId !== 'undefined') {
+      // Agrega el campo userId a la consulta SQL y los parámetros
+      sqlQuery = 'UPDATE Chat SET status = ?, userId = ? WHERE idChat2 = ?';
+      sqlParams.unshift(nuevoUserId); // Agrega nuevoUserId al principio de los parámetros
+    }
 
     // Realiza la consulta SQL para actualizar el userId del chat por idChat2
-    const [result] = await promisePool.execute('UPDATE Chat SET status = ? WHERE idChat2 = ?', [nuevoEstado, idChat2]);
+    const [result] = await promisePool.execute(sqlQuery, sqlParams);
 
     if (result.affectedRows > 0) {
       // Si se actualiza con éxito, devolver una respuesta exitosa
@@ -249,8 +279,8 @@ app.put('/db/actualizar-estado-chat', async (req, res) => {
       res.status(404).json({ error: 'Chat no encontrado' });
     }
   } catch (error) {
-    
-    res.status(500).json({ error: 'Error al actualizar el usuario del chat' });
+    console.error('Error al actualizar el usuario del chat:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 

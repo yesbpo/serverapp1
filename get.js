@@ -169,6 +169,27 @@ app.all('/w/api/index', async (req, res) => {
         const responseData = await response.json();
   
         }
+        else{
+          const data = {
+            // Asigna el valor actual del contador y luego incrementa
+           idChat2:numeroNormalizado ,
+           resolved: false,
+           userId: 0,
+         };
+         const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(data),
+         });
+         if (!response.ok) {
+          
+         }
+         const responseData = await response.json();
+   
+         }
+        
         
       }
     } catch (error) {
