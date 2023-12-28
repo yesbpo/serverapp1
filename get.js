@@ -52,16 +52,9 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     // Puedes agregar lógica adicional cuando un cliente se desconecta
   });
-
-  // Manejar el evento 'cambio' desde el cliente
-  socket.on('cambio', (data) => {
-    // Aquí puedes manejar los datos recibidos desde el cliente
-    console.log('Evento "cambio" recibido del cliente:', data);
-  });
-});
-// Ruta para recibir eventos del webhook
+});// Ruta para recibir eventos del webhook
 app.all('/w/api/index', async (req, res) => {
-  io.emit('cambio', { mensaje: 'Se ha producido un cambio en el servidor.' });
+ 
   const userAgent = req.get('User-Agent');
   // Verifica si la solicitud es del User-Agent específico
   if (userAgent) {
