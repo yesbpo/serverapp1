@@ -62,29 +62,6 @@ app.all('/w/api/index', async (req, res) => {
       // Procesa la solicitud de manera asíncrona aquí
       await processAsync(data);
       var data = req.body;
-      
-      if(data.payload.source){
-        console.log(data1)
-        const numero1 = '57' + data.payload.source;
-        const data1 = {
- 
-          // Asigna el valor actual del contador y luego incrementa
-         idChat2:numero1 ,
-         resolved: false,
-         status: 'pending',
-         userId: 0,
-       };
-       const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify(data1),
-       });
-       if (!response.ok) {
-        
-       }
-      }
       const number = data.payload.source || data.payload.destination;
       const content = data.payload.payload.text || data.payload.payload.url;
       const type_comunication = data.type;
