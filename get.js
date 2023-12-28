@@ -223,6 +223,7 @@ app.all('/w/api/index', async (req, res) => {
         }
         // Encuentra el valor mínimo en las frecuencias
       console.log("Frecuencia de números:", frecuenciaNumeros);
+      console.log(chatsExistentes);
       var elementoSeleccionado;
       // Verifica si chatsSinUserId es un array o no
 if (chatsSinUserId.length>1) { 
