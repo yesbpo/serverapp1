@@ -57,7 +57,7 @@ app.all('/w/api/index', async (req, res) => {
       // Procesa la solicitud de manera asíncrona aquí
       await processAsync(data);
       var data = req.body;
-      console.log(data)
+      
       const number = data.payload.source || data.payload.destination;
       const content = data.payload.payload.text || data.payload.payload.url;
       const type_comunication = data.type;
@@ -93,7 +93,7 @@ app.all('/w/api/index', async (req, res) => {
     // Manejar la respuesta según tus necesidades
   })
   .catch((error) => {
-    console.error('Error al consumir la ruta:', error);
+    
     // Manejar el error según tus necesidades
   });
      } catch (error) {
@@ -159,7 +159,7 @@ app.all('/w/api/index', async (req, res) => {
           body: JSON.stringify(data),
         });
         if (!response.ok) {
-          throw new Error(`Error en ${numeroUnico}: ${response.status} ${response.statusText}`);
+         
         }
         const responseData = await response.json();
   
@@ -179,7 +179,7 @@ app.all('/w/api/index', async (req, res) => {
     },
     });
   if (!responseChatExistente.ok) {
-    throw new Error(`Error en la solicitud: ${responseChatExistente.status} ${responseChatExistente.statusText}`);
+    
   }
   const chatsExistentes = await responseChatExistente.json();
   
@@ -193,7 +193,7 @@ app.all('/w/api/index', async (req, res) => {
       try {
         const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
         if (!response.ok) {
-          throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+        
         }
         const chatsExistentes = await response.json();
   
@@ -255,7 +255,7 @@ if (chatsSinUserId.length>1) {
               });
           
               if (!response.ok) {
-                throw new Error(`Error en la solicitud: ${response.status} ${response.statusText} ${idChat2}`);
+             
               }
             
               const resultado = await response.json();
@@ -301,7 +301,7 @@ if (chatsSinUserId.length>1) {
     });
 
     if (!response.ok) {
-      throw new Error(`Error en la solicitud: ${response.status} ${response.statusText} ${chatsSinUserId.idChat2}`);
+
     }
 
     const resultado = await response.json();
@@ -324,8 +324,7 @@ if (chatsSinUserId.length>1) {
             },
           });
           if (!response.ok) {
-            throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
-          }
+                      }
           const usuarios = await response.json();       
           // Filtra solo los usuarios activos
           const usuariosActivos = usuarios.filter((usuario) => usuario.session === 'Activo');
