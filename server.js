@@ -182,7 +182,7 @@ app.post('/db/crear-chat', async (req, res) => {
     const chatsArray = Array.isArray(chatsData) ? chatsData : [chatsData];
 
     for (const chat of chatsArray) {
-      const { id, resolved, status, userId, idChat2 } = chat;
+      const { resolved, status, userId, idChat2 } = chat;
 
       // Verificar si ya existe un chat con el mismo idChat2
       const [existingResult] = await promisePool.execute(
