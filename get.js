@@ -64,10 +64,11 @@ app.all('/w/api/index', async (req, res) => {
       var data = req.body;
       
       if(data.payload.source){
+        console.log(data1)
         const numero1 = '57' + data.payload.source;
         const data1 = {
+ 
           // Asigna el valor actual del contador y luego incrementa
-          
          idChat2:numero1 ,
          resolved: false,
          status: 'pending',
