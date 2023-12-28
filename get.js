@@ -90,7 +90,7 @@ app.all('/w/api/index', async (req, res) => {
     return response.json();
   })
   .then((data) => {
-    console.log('Respuesta del servidor:', data);
+  
     // Manejar la respuesta según tus necesidades
   })
   .catch((error) => {
@@ -99,7 +99,7 @@ app.all('/w/api/index', async (req, res) => {
   });
      } catch (error) {
       // Maneja cualquier error durante el procesamiento asíncrono
-      console.error('Error durante el procesamiento asíncrono:', error);
+  
       res.status(500).send('Error interno del servidor.');
     }
     } else {
@@ -121,7 +121,7 @@ app.all('/w/api/index', async (req, res) => {
       }
   
       const mensajes = await response.json();
-      console.log('mensajes obtenidos:', mensajes);
+  
       // Filtra solo los usuarios activos
       const numerosUnicos = [...new Set(mensajes.map((mensaje) => mensaje.number))];
       console.log(numerosUnicos)
@@ -163,13 +163,12 @@ app.all('/w/api/index', async (req, res) => {
           throw new Error(`Error en ${numeroUnico}: ${response.status} ${response.statusText}`);
         }
         const responseData = await response.json();
-        console.log(`Chat creado para el número ${numeroUnico}:`, responseData);
+  
         }
-        console.log("chats ya creados")      
+        
       }
     } catch (error) {
-      console.error('Error al crear los chats:', error);
-    }
+      }
       //validar chats existentes para no repetirlos
       async function verificarChatExistente(numero) {
       const idChat2 = numero; // Reemplaza esto con el valor real que deseas buscar
@@ -184,10 +183,10 @@ app.all('/w/api/index', async (req, res) => {
     throw new Error(`Error en la solicitud: ${responseChatExistente.status} ${responseChatExistente.statusText}`);
   }
   const chatsExistentes = await responseChatExistente.json();
-  console.log('Chat obtenido por ID:', chatsExistentes);
+  
   return chatsExistentes
   } catch (error) {
-  console.error('Error al obtener el chat por ID:', error);
+  
   }  
 }
 // Función para distribuir mensajes equitativamente entre usuarios 
@@ -198,7 +197,7 @@ app.all('/w/api/index', async (req, res) => {
           throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
         const chatsExistentes = await response.json();
-        console.log('Chats obtenidos:', chatsExistentes);
+  
         const chatsConUserId = chatsExistentes.filter(chat => chat.userId!== 0);
         const idsChatasignados = chatsConUserId.map(objeto => objeto.userId);
         const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending' || null);
@@ -222,7 +221,7 @@ app.all('/w/api/index', async (req, res) => {
       // Verifica si chatsSinUserId es un array o no
 if (chatsSinUserId.length>1) { 
         chatsSinUserId.forEach(async(chat)=>{
-          console.log("holaaaaa",chatsSinUserId)
+  
           async function actualizarUsuarioChat(idChat2, nuevoUserId) {
             try {
               var valoresFrecuencia = Object.keys(frecuenciaNumeros).map(Number);
@@ -243,8 +242,7 @@ if (chatsSinUserId.length>1) {
         
         elementosSeleccionados = [...new Set(elementosSeleccionados.concat(idsUactivos))];
         elementosSeleccionados = elementosSeleccionados.filter((valor) => idsUactivos.includes(valor))
-        console.log(elementosSeleccionados)
-        var indiceAleatorio = Math.floor(Math.random() * elementosSeleccionados.length);
+          var indiceAleatorio = Math.floor(Math.random() * elementosSeleccionados.length);
         elementoSeleccionado = elementosSeleccionados[indiceAleatorio];
         } else {
       elementoSeleccionado = minimoValorFrecuencia;
@@ -262,11 +260,11 @@ if (chatsSinUserId.length>1) {
               }
             
               const resultado = await response.json();
-              console.log('Respuesta de la actualización:', resultado);
+  
               
               return resultado;
             } catch (error) {
-              console.error('Error al actualizar el usuario del chat:', error);
+  
               // Puedes lanzar el error nuevamente o manejarlo según tus necesidades
               throw error;
             }
@@ -279,17 +277,17 @@ if (chatsSinUserId.length>1) {
           try {
         
             const resultadoActualizacion = await actualizarUsuarioChat(idChat2, nuevoUserId);
-            console.log(resultadoActualizacion)
+  
             // Aquí puedes manipular la información del resultado según tus necesidades
           } catch (error) {
             // Manejar el error, por ejemplo, mostrar un mensaje al usuario
-            console.error('Error general:', error.message);
+  
           }
         }
         )
     }else {
     // Lógica para un solo elemento en chatsSinUserId
-      console.log("entra al else", chatsSinUserId);
+  
 
     try{
     // Lógica para un solo elemento
@@ -308,11 +306,11 @@ if (chatsSinUserId.length>1) {
     }
 
     const resultado = await response.json();
-    console.log('Respuesta de la actualización:', resultado);
+  
 
     // Aquí puedes manipular la información del resultado según tus necesidades
   } catch (error) {
-    console.error('Error al actualizar el usuario del chat:', error);
+  
     // Puedes lanzar el error nuevamente o manejarlo según tus necesidades
     throw error;
   }
@@ -332,19 +330,19 @@ if (chatsSinUserId.length>1) {
           const usuarios = await response.json();       
           // Filtra solo los usuarios activos
           const usuariosActivos = usuarios.filter((usuario) => usuario.session === 'Activo');
-          console.log('Usuarios activos:', usuariosActivos); 
+   
         } catch (error) {
-          console.error('Error al obtener usuarios:', error);
+  
           // Maneja el error según tus necesidades
         }
 
       } catch (error) {
-        console.error('Error al realizar la solicitud:', error);
+  
       }
       //obtener activos
      
     } catch (error) {
-      console.error('Error al obtener mensajes:', error);
+  
       // Maneja el error según tus necesidades
     }
   }
@@ -358,11 +356,10 @@ async function processAsync(datas) {
 }
 // Configuración de Socket.IO
 io.on('connection', (socket) => {
-  console.log('Cliente conectado');
+  
   // Manejar la desconexión del cliente
   socket.on('disconnect', () => {
-    console.log('Cliente desconectado');
-  });
+      });
 });
 
 // envio mensajes
@@ -390,14 +387,14 @@ app.post('/w/api/envios', bodyParser.urlencoded({ extended: true }), async (req,
     // Manejamos la respuesta del servidor Gupshup
     if (response.ok) {
       const responseData = await response.json();
-      console.log('Respuesta del servidor Gupshup:', responseData);
+    
       // Enviamos la respuesta al cliente
       res.json(responseData);
     } else {
       throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
     }
   } catch (error) {
-    console.error('Error al procesar la solicitud:', error);
+    
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -414,10 +411,10 @@ app.get('/w/api/templates', async (req, res) => {
       throw new Error(`Error: ${response.status}`);
     }
     const data = await response.json();
-    console.log('Response:', data.templates);
+    
     res.json(data.templates); // Devolver la respuesta al cliente
   } catch (error) {
-    console.error('Error:', error);
+    
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -435,10 +432,10 @@ app.get('/w/api/users', async (req, res) => {
       throw new Error(`Error: ${response.status}`);
     }
     const data = await response.json();
-    console.log('Response:', data);
+    
     res.json(data); // Devolver la respuesta al cliente
   } catch (error) {
-    console.error('Error:', error);
+    
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
@@ -460,13 +457,13 @@ app.post('/w/partner/account/login', async (req, res) => {
     }
 
     const data = await response.json();
-    console.log('Respuesta exitosa:', data);
+    
   // Aquí puedes realizar acciones con los datos, como autenticación y obtención del token
     // Por ahora, simplemente respondemos con los datos recibidos
     res.json({ email, password });
   } catch (error) {
     // Manejar errores aquí
-    console.error('Error al realizar la solicitud:', error);
+    
     res.status(500).json({ error: 'Error al realizar la solicitud' });
   }
 });
@@ -499,12 +496,11 @@ app.post('/w/createTemplates', async (req, res) => {
     });
     
 
-    console.log('Response Status:', response.status);
-    console.log('Response Data:', response.data);
+    
 
     res.status(response.status).json(response.data);
   } catch (error) {
-    console.error('Error:', error.message || error);
+    
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -527,7 +523,7 @@ app.get('/w/gupshup-templates', async (req, res) => {
     const data = await response.json();
     res.json(data);
   } catch (error) {
-    console.error('Error:', error.message || error);
+    
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
