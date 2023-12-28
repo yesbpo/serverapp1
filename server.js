@@ -265,7 +265,7 @@ app.put('/db/actualizar-estado-chat', async (req, res) => {
     if (typeof nuevoUserId !== 'undefined') {
       // Agrega el campo userId a la consulta SQL y los parámetros
       sqlQuery = 'UPDATE Chat SET status = ?, userId = ? WHERE idChat2 = ?';
-      sqlParams.push(nuevoUserId);// Agrega nuevoUserId al principio de los parámetros
+      // Agrega nuevoUserId al principio de los parámetros
     }
 
     // Realiza la consulta SQL para actualizar el userId del chat por idChat2
