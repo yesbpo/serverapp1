@@ -259,7 +259,7 @@ app.put('/db/actualizar-estado-chat', async (req, res) => {
 
     // Construye la consulta SQL base sin el campo userId
     let sqlQuery = 'UPDATE Chat SET status = ? WHERE idChat2 = ?';
-    const sqlParams = [nuevoEstado, idChat2];
+    const sqlParams = [nuevoEstado, idChat2, nuevoUserId];
 
     // Verifica si se proporciona un nuevo valor para userId en la solicitud
     if (typeof nuevoUserId !== 'undefined') {
