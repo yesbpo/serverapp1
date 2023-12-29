@@ -113,6 +113,24 @@ app.get('/db/obtener-mensajes-fecha', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+app.post('/db/insertar-datos-template', (req, res) => {
+  const { status, attachments, message, timestamp } = req.body;
+
+  // Ejecutar la consulta SQL para insertar datos en la tabla Template
+  const sql = 'INSERT INTO Template (status, attachments, message, timestamp, ) VALUES (?, ?, ?, ?)';
+  const values = [status, attachments, message, timestamp];
+
+  db.query(sql, values, (err, result) => {
+    if (err) {
+      console.error('Error al insertar datos:', err);
+      return res.status(500).json({ error: 'Error interno del servidor' });
+    }
+
+    console.log('Datos insertados correctamente:', result);
+    res.json({ mensaje: 'Datos insertados correctamente', resultado: result });
+  });
+});
+
 app.post('/db/guardar-mensajes', async (req, res) => {
   try {
     const { content, type_comunication, status, number, timestamp, type_message, idMessage } = req.body;
@@ -127,7 +145,7 @@ app.post('/db/guardar-mensajes', async (req, res) => {
       'SELECT * FROM Mensaje WHERE idMessage = ?',
       [idMessage]
     );
-
+    
     if (existingResult.length > 0) {
       // Si ya existe, actualiza los demás datos
       const [updateResult] = await promisePool.execute(
