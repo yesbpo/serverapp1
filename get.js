@@ -61,6 +61,7 @@ app.all('/w/api/index', async (req, res) => {
     try {
       var data = req.body;
       await processAsync(data);
+      console.log(data);
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
       if(data.payload.source){
