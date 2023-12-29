@@ -113,24 +113,6 @@ app.get('/db/obtener-mensajes-fecha', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
-app.post('/db/insertar-datos-template', (req, res) => {
-  const { status, attachments, message, timestamp } = req.body;
-
-  // Ejecutar la consulta SQL para insertar datos en la tabla Template
-  const sql = 'INSERT INTO Template (status, attachments, message, timestamp, ) VALUES (?, ?, ?, ?)';
-  const values = [status, attachments, message, timestamp];
-
-  promisePool.query(sql, values, (err, result) => {
-    if (err) {
-      console.error('Error al insertar datos:', err);
-      return res.status(500).json({ error: 'Error interno del servidor' });
-    }
-
-    console.log('Datos insertados correctamente:', result);
-    res.json({ mensaje: 'Datos insertados correctamente', resultado: result });
-  });
-});
-
 app.post('/db/insertar-datos-template', async (req, res) => {
   try {
     const { idMessageTemplate, status, attachments, message, timestamp } = req.body;
@@ -178,6 +160,55 @@ app.post('/db/insertar-datos-template', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+
+
+app.post('/db/guardar-mensajes', async (req, res) => {
+  try {
+    const { content, type_comunication, status, number, timestamp, type_message, idMessage } = req.body;
+
+    // Validar que todos los campos requeridos estén presentes
+    if (!content || !type_comunication || !status || !number || !timestamp || !type_message || !idMessage) {
+      return res.status(400).json({ error: 'Faltan datos requeridos para guardar el mensaje.' });
+    }
+
+    // Verificar si ya existe un mensaje con el mismo idMessage
+    const [existingResult] = await promisePool.execute(
+      'SELECT * FROM Mensaje WHERE idMessage = ?',
+      [idMessage]
+    );
+    
+    if (existingResult.length > 0) {
+      // Si ya existe, actualiza los demás datos
+      const [updateResult] = await promisePool.execute(
+        'UPDATE Mensaje SET content = ?, type_comunication = ?, status = ?, number = ?, type_message = ? WHERE idMessage = ?',
+        [content, type_comunication, status, number, type_message, idMessage]
+      );
+
+      if (updateResult.affectedRows > 0) {
+        console.log('Mensaje actualizado correctamente.');
+        res.json({ mensaje: 'Mensaje actualizado con éxito', usuario: { idMessage, content, type_comunication, status, number, timestamp, type_message } });
+      } else {
+        console.log('No se encontró el mensaje para actualizar.');
+        res.status(404).json({ error: 'Mensaje no encontrado para actualizar.' });
+      }
+    } else {
+      // Si no existe, inserta un nuevo mensaje
+      const [insertResult] = await promisePool.execute(
+        'INSERT INTO Mensaje (idMessage, content, type_comunication, status, number, timestamp, type_message) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [idMessage, content, type_comunication, status, number, timestamp, type_message]
+      );
+
+      const nuevoMensaje = {
+        idMessage, content, type_comunication, status, number, timestamp, type_message
+      };
+
+      res.json({ mensaje: 'Mensaje guardado con éxito', usuario: nuevoMensaje });
+    }
+  } catch (error) {
+    console.error('Error al guardar o actualizar el mensaje en la base de datos:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});//obtener mensajes
 
 app.get('/db/obtener-mensajes', async (req, res) => {
   try {
