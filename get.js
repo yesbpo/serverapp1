@@ -62,6 +62,7 @@ app.all('/w/api/index', async (req, res) => {
       var data = req.body;
       await processAsync(data);
       console.log(data);
+      if(data.payload.conversation){
       const datosAInsertar = {
         status: data.payload.type,
         attachments: data.payload.destination,
@@ -76,7 +77,7 @@ app.all('/w/api/index', async (req, res) => {
            },
            body: JSON.stringify(datosAInsertar)
          })
-             
+        }
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
       if(data.payload.source){
