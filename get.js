@@ -62,8 +62,11 @@ app.all('/w/api/index', async (req, res) => {
       var data = req.body;
       await processAsync(data);
       console.log(data);
+      const responseTemplates = await fetch('https://api.gupshup.io/sm/api/v1/template/list/Pb1yes');
+      const templates = responseTemplates.json();
+      console.log(templates)
       if(data.payload.conversation){
-        console.log('entra en el ciclo')
+        
       const datosAInsertar = {
         status: data.payload.type,
         attachments: data.payload.destination,
