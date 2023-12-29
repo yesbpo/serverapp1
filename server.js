@@ -115,10 +115,10 @@ app.get('/db/obtener-mensajes-fecha', async (req, res) => {
 });
 app.post('/db/insertar-datos-template', async (req, res) => {
   try {
-    const { idMessageTemplate, status, attachments, message, timestamp } = req.body;
+    const { idmessageTemplate, status, attachments, message, timestamp } = req.body;
 
     // Validar que todos los campos requeridos estén presentes
-    if (!idMessageTemplate || !status || !attachments || !message || !timestamp) {
+    if (!idmessageTemplate || !status || !attachments || !message || !timestamp) {
       return res.status(400).json({ error: 'Faltan datos requeridos para insertar en la plantilla.' });
     }
 
@@ -132,12 +132,12 @@ app.post('/db/insertar-datos-template', async (req, res) => {
       // Si ya existe, actualiza los demás datos
       const [updateResult] = await promisePool.execute(
         'UPDATE Template SET status = ?, attachments = ?, message = ?, timestamp = ? WHERE idMessageTemplate = ?',
-        [status, attachments, message, timestamp, idMessageTemplate]
+        [status, attachments, message, timestamp, idmessageTemplate]
       );
 
       if (updateResult.affectedRows > 0) {
         console.log('Registro actualizado correctamente.');
-        res.json({ mensaje: 'Registro actualizado con éxito', datos: { idMessageTemplate, status, attachments, message, timestamp } });
+        res.json({ mensaje: 'Registro actualizado con éxito', datos: { idmessageTemplate, status, attachments, message, timestamp } });
       } else {
         console.log('No se encontró el registro para actualizar.');
         res.status(404).json({ error: 'Registro no encontrado para actualizar.' });
@@ -150,7 +150,7 @@ app.post('/db/insertar-datos-template', async (req, res) => {
       );
 
       const nuevoRegistro = {
-        idMessageTemplate, status, attachments, message, timestamp
+        idmessageTemplate, status, attachments, message, timestamp
       };
 
       res.json({ mensaje: 'Registro insertado con éxito', datos: nuevoRegistro });
