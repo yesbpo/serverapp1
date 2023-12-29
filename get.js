@@ -68,7 +68,7 @@ app.all('/w/api/index', async (req, res) => {
         console.log('entra en if')
         const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
         console.log(chatlimpio)
-        if(chatlimpio[0].status == 'closed'){
+        if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
           console.log('entra en if2')
           const data1 = {
             // Asigna el valor actual del contador y luego incrementa
