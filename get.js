@@ -80,6 +80,12 @@ app.all('/w/api/index', async (req, res) => {
            body: JSON.stringify(datosAInsertar)
            
          })
+         if (!respnseweb.ok) {
+          console.log('no exitoso')       
+        }
+        const respnse1 = await respnseweb.json();
+  console.log('exito')
+        
         }
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
