@@ -120,7 +120,7 @@ app.post('/db/insertar-datos-template', (req, res) => {
   const sql = 'INSERT INTO Template (status, attachments, message, timestamp, ) VALUES (?, ?, ?, ?)';
   const values = [status, attachments, message, timestamp];
 
-  db.query(sql, values, (err, result) => {
+  promisePool.query(sql, values, (err, result) => {
     if (err) {
       console.error('Error al insertar datos:', err);
       return res.status(500).json({ error: 'Error interno del servidor' });
