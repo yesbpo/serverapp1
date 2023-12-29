@@ -71,7 +71,7 @@ app.all('/w/api/index', async (req, res) => {
           console.log('entra en if2')
           const data1 = {
             // Asigna el valor actual del contador y luego incrementa
-           idChat2:chatlimpio.idChat2 ,
+           idChat2: chatlimpio[0].idChat2,
            resolved: false,
            status: 'pending',
            userId: 0,
