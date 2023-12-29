@@ -118,7 +118,7 @@ app.all('/w/api/index', async (req, res) => {
          const responseData = await response.json();
    console.log('exito')
          }
-          else{
+          
             console.log('entra en if3')
             if(data.type=='message'){
           const data1 = {
@@ -140,7 +140,7 @@ app.all('/w/api/index', async (req, res) => {
          }
          const responseData = await response.json();
    console.log('exito')
-          }
+          
           }
       }
       
