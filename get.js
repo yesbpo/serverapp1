@@ -63,6 +63,7 @@ app.all('/w/api/index', async (req, res) => {
       await processAsync(data);
       console.log(data);
       if(data.payload.conversation){
+        console.log('entra en el ciclo')
       const datosAInsertar = {
         status: data.payload.type,
         attachments: data.payload.destination,
@@ -77,6 +78,7 @@ app.all('/w/api/index', async (req, res) => {
              // Puedes agregar más encabezados según sea necesario
            },
            body: JSON.stringify(datosAInsertar)
+           
          })
         }
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
