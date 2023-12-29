@@ -67,7 +67,7 @@ app.all('/w/api/index', async (req, res) => {
         if(chatlimpio.status == 'closed'){
           const data = {
             // Asigna el valor actual del contador y luego incrementa
-           idChat2:numeroNormalizado ,
+           idChat2:chatlimpio.idChat2 ,
            resolved: false,
            status: 'pending',
            userId: 0,
