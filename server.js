@@ -125,7 +125,7 @@ app.post('/db/insertar-datos-template', async (req, res) => {
     // Verificar si ya existe un registro con el mismo idMessageTemplate
     const [existingResult] = await promisePool.execute(
       'SELECT * FROM Template WHERE idMessageTemplate = ?',
-      [idMessageTemplate]
+      [idmessageTemplate]
     );
 
     if (existingResult.length > 0) {
@@ -145,7 +145,7 @@ app.post('/db/insertar-datos-template', async (req, res) => {
     } else {
       // Si no existe, inserta un nuevo registro
       const [insertResult] = await promisePool.execute(
-        'INSERT INTO Template (idMessageTemplate, status, attachments, message, timestamp) VALUES (?, ?, ?, ?, ?)',
+        'INSERT INTO Template (idmessageTemplate, status, attachments, message, timestamp) VALUES (?, ?, ?, ?, ?)',
         [idMessageTemplate, status, attachments, message, timestamp]
       );
 
