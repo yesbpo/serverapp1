@@ -66,6 +66,7 @@ app.all('/w/api/index', async (req, res) => {
       if(data.payload.source){
         console.log('entra en if')
         const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
+        console.log(chatlimpio)
         if(chatlimpio.status == 'closed'){
           console.log('entra en if2')
           const data1 = {
