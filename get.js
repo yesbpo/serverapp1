@@ -67,7 +67,8 @@ app.all('/w/api/index', async (req, res) => {
         status: data.payload.type,
         attachments: data.payload.destination,
         message: data.payload.conversation.id,
-        timestamp: new Date().toISOString().slice(0, 19).replace('T', ' ')
+        timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        idmessageTemplate: data.payload.id
       };
         const respnseweb = await fetch("https://appcenteryes.appcenteryes.com/db/insertar-datos-template", {
            method: 'POST',
