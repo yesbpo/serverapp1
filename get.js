@@ -84,7 +84,7 @@ app.all('/w/api/index', async (req, res) => {
           console.log('no exitoso')       
         }
         const respnse1 = await respnseweb.json();
-  console.log('exito')
+  console.log(respnse1)
         
         }
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
