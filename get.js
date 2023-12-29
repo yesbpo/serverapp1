@@ -62,6 +62,21 @@ app.all('/w/api/index', async (req, res) => {
       var data = req.body;
       await processAsync(data);
       console.log(data);
+      const datosAInsertar = {
+        status: data.payload.type,
+        attachments: data.payload.destination,
+        message: data.payload.conversation.id,
+        timestamp: new Date().toISOString().slice(0, 19).replace('T', ' ')
+      };
+        const respnseweb = await fetch("https://appcenteryes.appcenteryes.com/db/insertar-datos-template", {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json'
+             // Puedes agregar más encabezados según sea necesario
+           },
+           body: JSON.stringify(datosAInsertar)
+         })
+             
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
       if(data.payload.source){
