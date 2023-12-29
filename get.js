@@ -59,10 +59,11 @@ app.all('/w/api/index', async (req, res) => {
   // Verifica si la solicitud es del User-Agent específico
   if (userAgent) {
     try {
+      var data = req.body;
       await processAsync(data);
           
         
-      const data = {
+      const data1 = {
         // Asigna el valor actual del contador y luego incrementa
        idChat2:numeroNormalizado ,
        resolved: false,
@@ -74,7 +75,7 @@ app.all('/w/api/index', async (req, res) => {
        headers: {
          'Content-Type': 'application/json',
        },
-       body: JSON.stringify(data),
+       body: JSON.stringify(data1),
      });
      if (!response.ok) {
        console.log('no exito')       
@@ -85,7 +86,7 @@ console.log('exito')
      
       
       
-      var data = req.body;
+      
       const number = data.payload.source || data.payload.destination;
       const content = data.payload.payload.text || data.payload.payload.url;
       const type_comunication = data.type;
