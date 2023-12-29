@@ -146,7 +146,7 @@ app.post('/db/insertar-datos-template', async (req, res) => {
       // Si no existe, inserta un nuevo registro
       const [insertResult] = await promisePool.execute(
         'INSERT INTO Template (idmessageTemplate, status, attachments, message, timestamp) VALUES (?, ?, ?, ?, ?)',
-        [idMessageTemplate, status, attachments, message, timestamp]
+        [idmessageTemplate, status, attachments, message, timestamp]
       );
 
       const nuevoRegistro = {
