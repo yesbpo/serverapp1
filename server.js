@@ -192,10 +192,10 @@ app.post('/db/crear-chat', async (req, res) => {
 
       if (existingResult.length > 0) {
         // Si ya existe, actualiza los demás datos
-        const updatedStatus = status === 'closed' ? 'pending' : status; // Establecer el estado por defecto si es 'closed'
+        
         await promisePool.execute(
           'UPDATE Chat SET resolved = ?, status = ?, userId = ? WHERE idChat2 = ?',
-          [resolved, updatedStatus, userId, idChat2]
+          [resolved, status, userId, idChat2]
         );
       } else {
         // Si no existe, inserta un nuevo chat
