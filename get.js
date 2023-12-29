@@ -120,10 +120,10 @@ app.all('/w/api/index', async (req, res) => {
          }
           else{
             console.log('entra en if3')
-            if(chatlimpio[0].type_message=='message'){
+            if(data.type=='message'){
           const data1 = {
             // Asigna el valor actual del contador y luego incrementa
-           idChat2: chatlimpio[0].idChat2,
+           idChat2: data.payload.source,
            resolved: false,
            status: 'pending',
            userId: 0,
