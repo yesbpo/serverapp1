@@ -64,6 +64,7 @@ app.all('/w/api/index', async (req, res) => {
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
       if(data.payload.source){
+        console.log('entra en if')
         const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
         if(chatlimpio.status == 'closed'){
           const data1 = {
