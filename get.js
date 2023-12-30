@@ -64,9 +64,6 @@ app.all('/w/api/index', async (req, res) => {
       console.log(data);
       
       //aqui
-      const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-      const chats = await responseChat.json();
-      const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
         console.log('entra en if3')
           const data1 = {
             // Asigna el valor actual del contador y luego incrementa
@@ -83,6 +80,14 @@ app.all('/w/api/index', async (req, res) => {
            },
            body: JSON.stringify(data1),
          });
+         if (!response.ok) {
+           console.log('no exito')       
+         
+         const responseData = await response.json();
+   console.log(responseData)
+          
+          
+      }
       
       
       
@@ -148,6 +153,37 @@ app.all('/w/api/index', async (req, res) => {
 console.log(respnse1)
       
       }
+      const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
+      const chats = await responseChat.json();
+      const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
+      if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
+        console.log('entra en if')
+        
+        console.log(chatlimpio)
+        
+          console.log('entra en if2')
+          const data1 = {
+            
+           idChat2: chatlimpio[0].idChat2,
+           resolved: false,
+           status: 'pending',
+           userId: 0,
+         };
+         const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(data1),
+         });
+         if (!response.ok) {
+           console.log('no exito')       
+         }
+         const responseData = await response.json();
+          console.log(responseData)
+         
+      }
+      
      } catch (error) {
       // Maneja cualquier error durante el procesamiento asíncrono
   
