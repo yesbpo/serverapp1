@@ -94,22 +94,28 @@ app.post('db/crear-usuario', async (req, res) => {
 // ruta de crear mensajes
 
 app.use('/db/guardar-mensajes', cors());
-app.get('/db/obtener-mensajes-fecha', async (req, res) => {
+app.get('/db/obtener-mensajes-por-fecha', async (req, res) => {
   try {
-    const { fechaInicio, fechaFin } = req.query;
+    const { fechaInicio, fechaFin } = req.body;
 
-    // Ejecutar la consulta SQL para obtener mensajes filtrados por rango de fechas
-    const query = {
-      text: 'SELECT * FROM Mensaje WHERE timestamp >= $1 AND timestamp <= $2',
-      values: [fechaInicio, fechaFin],
-    };
-    
-    const { rows } = await promisePool.query(query);
+    // Validar que las fechas estén presentes
+    if (!fechaInicio || !fechaFin) {
+      return res.status(400).json({ error: 'Se requieren fechas de inicio y fin para obtener mensajes en un rango de fechas.' });
+    }
 
-    // Enviar los mensajes obtenidos como respuesta
-    res.json(rows);
+    // Consultar mensajes en el rango de fechas
+    const [result] = await promisePool.execute(
+      'SELECT * FROM Mensaje WHERE timestamp >= ? AND timestamp <= ?',
+      [fechaInicio, fechaFin]
+    );
+
+    if (result.length > 0) {
+      res.json({ mensajes: result });
+    } else {
+      res.json({ mensajes: [], mensaje: 'No se encontraron mensajes en el rango de fechas especificado.' });
+    }
   } catch (error) {
-    console.error('Error al obtener los mensajes de la base de datos:', error);
+    console.error('Error al obtener mensajes por fecha en la base de datos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
