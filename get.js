@@ -105,6 +105,7 @@ app.all('/w/api/index', async (req, res) => {
            status: 'pending',
            userId: 0,
          };
+         console.log(data1.idChat2)
          const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
            method: 'POST',
            headers: {
