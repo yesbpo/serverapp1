@@ -93,7 +93,7 @@ app.all('/w/api/index', async (req, res) => {
          const responseData = await response.json();
    console.log(responseData)
          
-      }else{
+      }
         console.log('entra en if3')
           const data1 = {
             // Asigna el valor actual del contador y luego incrementa
@@ -112,7 +112,7 @@ app.all('/w/api/index', async (req, res) => {
          });
          if (!response.ok) {
            console.log('no exito')       
-         }
+         
          const responseData = await response.json();
    console.log(responseData)
           
