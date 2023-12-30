@@ -66,11 +66,12 @@ app.all('/w/api/index', async (req, res) => {
       //aqui
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
-      if(data.payload.source){
+      const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
+      if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
         console.log('entra en if')
-        const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
+        
         console.log(chatlimpio)
-        if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
+        
           console.log('entra en if2')
           const data1 = {
             
@@ -91,11 +92,7 @@ app.all('/w/api/index', async (req, res) => {
          }
          const responseData = await response.json();
    console.log(responseData)
-         }
-          
-           
-            
-          
+         
       }else{
         console.log('entra en if3')
           const data1 = {
