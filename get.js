@@ -62,9 +62,7 @@ app.all('/w/api/index', async (req, res) => {
       var data = req.body;
       await processAsync(data);
       console.log(data);
-      const responseTemplates = await fetch('https://api.gupshup.io/sm/api/v1/template/list/Pb1yes');
-      const templates = responseTemplates.json();
-      console.log(templates)
+      
       //aqui
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
@@ -75,7 +73,7 @@ app.all('/w/api/index', async (req, res) => {
         if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
           console.log('entra en if2')
           const data1 = {
-            // Asigna el valor actual del contador y luego incrementa
+            
            idChat2: chatlimpio[0].idChat2,
            resolved: false,
            status: 'pending',
@@ -118,7 +116,7 @@ app.all('/w/api/index', async (req, res) => {
            console.log('no exito')       
          }
          const responseData = await response.json();
-   console.log('exito')
+   console.log(responseData)
           
           
       }
