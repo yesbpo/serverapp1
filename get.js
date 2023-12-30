@@ -92,16 +92,15 @@ app.all('/w/api/index', async (req, res) => {
            console.log('no exito')       
          }
          const responseData = await response.json();
-   console.log('exito')
+   console.log(responseData)
          }
           
-            console.log('entra en if3')
+           
             
           
       }else{
         console.log('entra en if3')
           const data1 = {
-           
             // Asigna el valor actual del contador y luego incrementa
            idChat2: data.payload.source,
            resolved: false,
