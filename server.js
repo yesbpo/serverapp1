@@ -93,7 +93,7 @@ app.post('db/crear-usuario', async (req, res) => {
 });
 // ruta de crear mensajes
 
-app.use('/db/guardar-mensajes', cors());
+app.use('/db/obtener-mensajes-por-fecha', cors());
 app.get('/db/obtener-mensajes-por-fecha', async (req, res) => {
   try {
     const { fechaInicio, fechaFin } = req.query; // Utiliza req.query para obtener parámetros de la URL
