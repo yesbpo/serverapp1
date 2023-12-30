@@ -100,7 +100,7 @@ app.get('/db/obtener-mensajes-fecha', async (req, res) => {
 
     // Ejecutar la consulta SQL para obtener mensajes filtrados por rango de fechas
     const query = {
-      text: 'SELECT * FROM mensajes WHERE timestamp >= $1 AND timestamp <= $2',
+      text: 'SELECT * FROM Mensaje WHERE timestamp >= $1 AND timestamp <= $2',
       values: [fechaInicio, fechaFin],
     };
     
