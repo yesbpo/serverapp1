@@ -96,7 +96,7 @@ app.post('db/crear-usuario', async (req, res) => {
 app.use('/db/guardar-mensajes', cors());
 app.get('/db/obtener-mensajes-por-fecha', async (req, res) => {
   try {
-    const { fechaInicio, fechaFin } = req.body;
+    const { fechaInicio, fechaFin } = req.query; // Utiliza req.query para obtener parámetros de la URL
 
     // Validar que las fechas estén presentes
     if (!fechaInicio || !fechaFin) {
