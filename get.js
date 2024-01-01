@@ -102,6 +102,7 @@ app.all('/w/api/index', async (req, res) => {
        const mensaje = {
         content, type_comunication, status, number, timestamp, type_message, idMessage
       };
+      console.log(mensaje)
       try {const response = await fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
         method: 'POST',
         headers: {
