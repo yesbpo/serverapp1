@@ -100,13 +100,7 @@ app.all('/w/api/index', async (req, res) => {
       const idMessage = data.payload.id;
        //condicional para determinar si el idMessage ya existe
        const mensaje = {
-        idMessage,
-        content,
-        type_comunication,
-        number,
-        timestamp,
-        status,
-        type_message
+        content, type_comunication, status, number, timestamp, type_message, idMessage
       };
        fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
   method: 'POST',
