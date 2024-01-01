@@ -102,29 +102,26 @@ app.all('/w/api/index', async (req, res) => {
        const mensaje = {
         content, type_comunication, status, number, timestamp, type_message, idMessage
       };
-       fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(mensaje
-  ),
-})
-  .then((response) => {
-    if (!response.ok) {
-      console.log(response)
-       }
-    return response.json();
-  })
-  .then((data) => {
-  
-    // Manejar la respuesta según tus necesidades
-  })
-  .catch((error) => {
+      try {const response = await fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(mensaje),
+      });
     
-    // Manejar el error según tus necesidades
-  });
-  if(data.payload.conversation){
+      if (!response.ok) {
+        console.error('Error en la solicitud:', response);
+        throw new Error('Error en la solicitud');
+      }
+    
+      const data = await response.json();
+      // Manejar la respuesta según tus necesidades
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+      // Manejar el error según tus necesidades
+       if(data.payload.conversation){
     const datosAInsertar = {
       status: data.payload.type,
       attachments: data.payload.destination,
