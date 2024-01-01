@@ -118,6 +118,7 @@ app.all('/w/api/index', async (req, res) => {
 })
   .then((response) => {
     if (!response.ok) {
+      console.log('no exitoso')
        }
     return response.json();
   })
