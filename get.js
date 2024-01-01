@@ -92,7 +92,7 @@ app.all('/w/api/index', async (req, res) => {
       
       
       const number = data.payload.source || data.payload.destination;
-      const content = data.payload.payload.text || data.payload.payload.url;
+      const content = data.payload.payload.text || data.payload.payload.url || '';
       const type_comunication = data.type;
       const status = data.payload.type || 'null';
       const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
