@@ -91,12 +91,17 @@ app.all('/w/api/index', async (req, res) => {
       
       const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
-const fechaFormateada = fechaActual.toLocaleString('en-US', options).replace(/,/g, '');
+const anio = fechaActual.getFullYear();
+const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0');
+const dia = fechaActual.getDate().toString().padStart(2, '0');
+const hora = fechaActual.getHours().toString().padStart(2, '0');
+const minutos = fechaActual.getMinutes().toString().padStart(2, '0');
+const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       const number = data.payload.source || data.payload.destination;
       const content = data.payload.payload.text || data.payload.payload.url || 'hola';
       const type_comunication = data.type;
       const status = data.payload.type || 'null';
-      const timestamp = fechaFormateada.split('/').reverse().join('-').replace(/,/, '');
+      const timestamp = `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`;
       const type_message = data.payload.type;
       const idMessage = data.payload.payload.whatsappMessageId || data.payload.gsId || data.payload.id ;
        //condicional para determinar si el idMessage ya existe
