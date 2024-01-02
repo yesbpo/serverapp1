@@ -103,7 +103,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       const status = data.payload.type || 'null';
       const timestamp = `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`;
       const type_message = data.payload.type;
-      const idMessage = data.payload.payload.whatsappMessageId || data.payload.gsId || data.payload.id ;
+      const idMessage = data.payload.gsId || data.payload.id ;
        //condicional para determinar si el idMessage ya existe
        const mensaje = {
         content, type_comunication, status, number, timestamp, type_message, idMessage
