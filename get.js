@@ -311,7 +311,6 @@ console.log(respnse1)
       // Verifica si chatsSinUserId es un array o no
 if (chatsSinUserId.length>1) { 
         chatsSinUserId.forEach(async(chat)=>{
-  
           async function actualizarUsuarioChat(idChat2, nuevoUserId) {
             try {
               var valoresFrecuencia = Object.keys(frecuenciaNumeros).map(Number);
@@ -381,6 +380,7 @@ if (chatsSinUserId.length>1) {
   
 
     try{
+      console.log('si entra')
     // Lógica para un solo elemento
     var indiceAleatorio = Math.floor(Math.random() * idsUactivos.length);
     elementoSeleccionado = idsUactivos[indiceAleatorio];
