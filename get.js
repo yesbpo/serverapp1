@@ -241,7 +241,7 @@ console.log(respnse1)
       for (const numeroUnico of numerosUnicos) {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
-        console.log('chat existente..');
+        console.log('chat existente..12');
        
         const data2 = {
            // Asigna el valor actual del contador y luego incrementa
@@ -250,31 +250,31 @@ console.log(respnse1)
           
           
         };
-        const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+        const response2 = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data2),
         });
-        if (!response.ok) {
+        if (!response2.ok) {
 
-          console.log('no exito crear chat')       
+          console.log('no exito crear chat1')       
         }
-        const responseData = await response.json();
-  console.log('exito')
+        const responseData2 = await response2.json();
+  console.log('exito1',responseData2)
         }
       
       try {
-        const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-        const chats = response.json()
+        const response12 = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
+        const chats = response12.json()
         const chatspendientes = chats.filter(chat=>chat.status == 'pending');
         
        // Inicializa un contador
       for (const numeroUnico of numerosUnicos) {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
-        console.log('chat existente..');
+        console.log('chat existente..1');
        
         const data3 = {
            // Asigna el valor actual del contador y luego incrementa
@@ -282,19 +282,19 @@ console.log(respnse1)
           resolved: false,
          
         };
-        const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+        const response3 = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data3),
         });
-        if (!response.ok) {
+        if (!response3.ok) {
 
-          console.log('no exito crear chat')       
+          console.log('no exito crear chat2')       
         }
-        const responseData = await response.json();
-            console.log('exito')
+        const responseData1 = await response3.json();
+            console.log('exito2',responseData1)
         }
         
         
