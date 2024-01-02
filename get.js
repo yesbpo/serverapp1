@@ -384,6 +384,7 @@ if (chatsSinUserId.length>1) {
     // Lógica para un solo elemento
     var indiceAleatorio = Math.floor(Math.random() * idsUactivos.length);
     elementoSeleccionado = idsUactivos[indiceAleatorio];
+    console.log(elementoSeleccionado)
     const response = await fetch('https://appcenteryes.appcenteryes.com/db/actualizar-usuario-chat', {
       method: 'PUT',
       headers: {
