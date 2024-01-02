@@ -17,10 +17,10 @@ const io = socketIo(server, {
     methods: ["GET", "POST"]
   }
 });
-const apiUrl = 'https://api.gupshup.io/sm/api/v1/template/list/Pb1yes';
+const apiUrl = 'https://api.gupshup.io/sm/api/v1/template/list/YESVARIOS';
 const apiUrlenvio = 'https://api.gupshup.io/sm/api/v1/msg';
 const apiKey = '6ovjpik6ouhlyoalchzu4r2csmeqwlbg';
-const apiUrluser = 'https://api.gupshup.io/sm/api/v1/users/Pb1yes';
+const apiUrluser = 'https://api.gupshup.io/sm/api/v1/users/YESVARIOS';
 const apiUrlPartnertoken = 'https://partner.gupshup.io/partner/account/login';
 app.use(cors({ origin: '*' }));
 // conexion crud base de datos
@@ -565,8 +565,8 @@ app.use((req, res, next) => {
 //Post templates
 app.post('/w/createTemplates', async (req, res) => {
   try {
-    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90'; // Reemplaza con tu ID de aplicación real
-    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa'; // Reemplaza con tu token de partner real
+    const appId = '2fdd13ac-c613-4d3a-a149-1ae6f33b576c'; // Reemplaza con tu ID de aplicación real
+    const partnerAppToken = 'sk_52a3f753e59346b49aeaf466cb55aadb'; // Reemplaza con tu token de partner real
     const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/templates`;
 
     const templateData = req.body; // Los datos de la plantilla provienen del cuerpo de la solicitud
@@ -592,8 +592,8 @@ app.post('/w/createTemplates', async (req, res) => {
 // Get templates
 app.get('/w/gupshup-templates', async (req, res) => {
   try {
-    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
-    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
+    const appId = '2fdd13ac-c613-4d3a-a149-1ae6f33b576c';
+    const partnerAppToken = 'sk_52a3f753e59346b49aeaf466cb55aadb';
     const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/templates`;
 
     const response = await fetch(apiUrl, {
@@ -615,8 +615,8 @@ app.get('/w/gupshup-templates', async (req, res) => {
 //DELETE TEMPLATES
 app.delete('/w/deleteTemplate/:elementName', async (req, res) => {
   try {
-    const appId = 'cef6cd40-330f-4b25-8ff2-9c8fcc434d90';
-    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
+    const appId = '2fdd13ac-c613-4d3a-a149-1ae6f33b576c';
+    const partnerAppToken = 'sk_52a3f753e59346b49aeaf466cb55aadb';
     const elementName = req.params.elementName;
 
     const apiUrl = `https://partner.gupshup.io/partner/app/${appId}/template/${elementName}?id=${elementName}`;
