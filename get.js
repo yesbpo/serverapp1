@@ -280,8 +280,7 @@ console.log(respnse1)
            // Asigna el valor actual del contador y luego incrementa
           idChat2:numeroNormalizado ,
           resolved: false,
-          status: 'pending',
-          userId: 0,
+         
         };
         const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
           method: 'POST',
