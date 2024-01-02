@@ -97,7 +97,7 @@ app.all('/w/api/index', async (req, res) => {
       const status = data.payload.type || 'null';
       const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
       const type_message = data.payload.type;
-      const idMessage = data.payload.id;
+      const idMessage = data.payload.payload.whatsappMessageId || data.payload.gsId || data.payload.id ;
        //condicional para determinar si el idMessage ya existe
        const mensaje = {
         content, type_comunication, status, number, timestamp, type_message, idMessage
