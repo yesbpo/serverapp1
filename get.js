@@ -238,6 +238,32 @@ console.log(respnse1)
         return numeroNormalizado;
       }
       //crear chats
+      for (const numeroUnico of numerosUnicos) {
+        const numeroNormalizado = await normalizarNumero(numeroUnico);
+        const chatExistente = await verificarChatExistente(numeroNormalizado);
+        console.log('chat existente..');
+       
+        const data = {
+           // Asigna el valor actual del contador y luego incrementa
+          idChat2:numeroNormalizado ,
+          resolved: false,
+          status: 'pending',
+          userId: 0,
+        };
+        const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+
+          console.log('no exito crear chat')       
+        }
+        const responseData = await response.json();
+  console.log('exito')
+        }
       
       try {
         const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
