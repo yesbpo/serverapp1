@@ -63,7 +63,7 @@ app.put('/db/actualizar/usuario', async (req, res) => {
 });
 app.use(cors());
 // Ruta para insertar datos
-app.post('db/crear-usuario', async (req, res) => {
+app.post('/db/crear-usuario', async (req, res) => {
   try {
     const { type_user, email, session, usuario, password, complete_name } = req.body;
 
