@@ -69,8 +69,8 @@ app.all('/w/api/index', async (req, res) => {
             // Asigna el valor actual del contador y luego incrementa
            idChat2: data.payload.source,
            resolved: false,
-           status: 'pending',
-           userId: 0,
+           
+           
          };
          console.log(data1.idChat2)
          const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
