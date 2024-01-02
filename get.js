@@ -37,15 +37,32 @@ app.use((req, res, next) => {
   next();
 });
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, 'uploads');
+    fs.mkdirSync(uploadPath, { recursive: true });
+    cb(null, uploadPath);
   },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname));
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
+app.post('/w/upload', upload.single('file'), (req, res) => {
+  // La carga de archivos se maneja aquí
+  const uploadedFile = req.file;
+
+  if (!uploadedFile) {
+    return res.status(400).send('No se proporcionó ningún archivo.');
+  }
+
+  // Construir la URL basada en la ubicación del archivo y el nombre de dominio
+  const fileUrl = `https://appcenteryes.appcenteryes.com/w/uploads/${uploadedFile.filename}`;
+
+  // Devolver la URL como respuesta
+  res.send(`URL del archivo: ${fileUrl}`);
+});
+
 
 io.on('connection', (socket) => {
   // Manejar la desconexión del cliente
@@ -128,7 +145,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       console.error('Error en la solicitud:', error);
     }
       // Manejar el error según tus necesidades
-       if(data.payload.conversation){
+       if(data.payload.conversation && data.payload.pricing){
     const datosAInsertar = {
       status: data.payload.type,
       attachments: data.payload.destination,
