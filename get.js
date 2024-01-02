@@ -91,12 +91,12 @@ app.all('/w/api/index', async (req, res) => {
       
       const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
-      
+const fechaFormateada = fechaActual.toLocaleString('en-US', options).replace(/,/g, '');
       const number = data.payload.source || data.payload.destination;
       const content = data.payload.payload.text || data.payload.payload.url || 'hola';
       const type_comunication = data.type;
       const status = data.payload.type || 'null';
-      const timestamp = fechaActual.toLocaleString('en-US', options).replace(/,/g, '');
+      const timestamp = fechaFormateada.split('/').reverse().join('-').replace(/,/, '');
       const type_message = data.payload.type;
       const idMessage = data.payload.payload.whatsappMessageId || data.payload.gsId || data.payload.id ;
        //condicional para determinar si el idMessage ya existe
@@ -128,7 +128,7 @@ const options = { timeZone: 'America/Bogota', hour12: false };
       status: data.payload.type,
       attachments: data.payload.destination,
       message: data.payload.conversation.id,
-      timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
+      timestamp: fechaActual.toLocaleString('en-US', options).replace(/,/g, ''),
       idmessageTemplate: data.payload.id
     };
       const respnseweb = await fetch("https://appcenteryes.appcenteryes.com/db/insertar-datos-template", {
