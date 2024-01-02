@@ -226,7 +226,7 @@ console.log(respnse1)
         const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
         const chats = response.json()
         const chatspendientes = chats.filter(chat=>chat.status == 'pending');
-      
+        
        // Inicializa un contador
       for (const numeroUnico of numerosUnicos) {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
@@ -345,12 +345,8 @@ if (chatsSinUserId.length>1) {
               });
           
               if (!response.ok) {
-             
               }
-            
               const resultado = await response.json();
-  
-              
               return resultado;
             } catch (error) {
   
