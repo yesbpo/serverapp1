@@ -248,7 +248,7 @@ console.log(respnse1)
       for (const numeroUnico of numerosUnicos) {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
-        console.log(chatExistente);
+        console.log('chat existente..');
        
         const data = {
            // Asigna el valor actual del contador y luego incrementa
@@ -265,7 +265,8 @@ console.log(respnse1)
           body: JSON.stringify(data),
         });
         if (!response.ok) {
-          console.log('no exito')       
+
+          console.log('no exito crear chat')       
         }
         const responseData = await response.json();
   console.log('exito')
