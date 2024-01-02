@@ -393,11 +393,11 @@ if (chatsSinUserId.length>1) {
     });
 
     if (!response.ok) {
-
+      console.log('error')
     }
 
     const resultado = await response.json();
-  
+    console.log("exitoso",resultado)
 
     // Aquí puedes manipular la información del resultado según tus necesidades
   } catch (error) {
