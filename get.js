@@ -133,7 +133,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       status: data.payload.type,
       attachments: data.payload.destination,
       message: data.payload.conversation.id,
-      timestamp: fechaActual.toLocaleString('en-US', options).replace(/,/g, ''),
+      timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
       idmessageTemplate: data.payload.id
     };
       const respnseweb = await fetch("https://appcenteryes.appcenteryes.com/db/insertar-datos-template", {
