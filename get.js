@@ -243,7 +243,7 @@ console.log(respnse1)
         const chatExistente = await verificarChatExistente(numeroNormalizado);
         console.log('chat existente..');
        
-        const data = {
+        const data2 = {
            // Asigna el valor actual del contador y luego incrementa
           idChat2:numeroNormalizado ,
           resolved: false,
@@ -255,7 +255,7 @@ console.log(respnse1)
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: JSON.stringify(data2),
         });
         if (!response.ok) {
 
