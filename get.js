@@ -199,8 +199,18 @@ console.log(respnse1)
           console.log(responseData)
          
       }
-           //obtener mensajes
-     try {
+      
+     } catch (error) {
+      // Maneja cualquier error durante el procesamiento asíncrono
+  
+      res.status(500).send('Error interno del servidor.');
+    }
+    } else {
+     //La solicitud no proviene de Gupshup, responde con un error
+    res.status(403).send('Acceso no autorizado.');
+    }
+     //obtener mensajes
+     
       const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-mensajes', {
         method: 'GET',
         headers: {
@@ -430,20 +440,7 @@ if (chatsSinUserId.length>1) {
       }
       //obtener activos
      
-    } catch (error) {
-  
-      // Maneja el error según tus necesidades
-    }
-     } catch (error) {
-      // Maneja cualquier error durante el procesamiento asíncrono
-  
-      res.status(500).send('Error interno del servidor.');
-    }
-    } else {
-     //La solicitud no proviene de Gupshup, responde con un error
-    res.status(403).send('Acceso no autorizado.');
-    }
-
+   
   }
   
 
