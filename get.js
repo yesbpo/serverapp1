@@ -168,10 +168,10 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
             }
 
           }
-          if(chatlimpio.length === 0){
-            console.log('entra en if')
+          else if(chatlimpio.length === 0){
+            console.log('entra en if33')
             
-            console.log('log de obtener',chatlimpio)
+            console.log('log de obtener33',chatlimpio)
             
               console.log('entra en if2')
               const data5 = {
