@@ -166,7 +166,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
         console.log('no exitoso')       
       }
       const respnse1 = await respnseweb.json();
-console.log(respnse1)
+      console.log(respnse1)
       
       }
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
@@ -309,14 +309,12 @@ console.log(respnse1)
       //obtener chats
       try {
         const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-        if (!response.ok) {
-        
+        if (!response.ok) { 
         }
         const chatsExistentes = await response.json();
-  
         const chatsConUserId = chatsExistentes.filter(chat => chat.userId!== 0);
         const idsChatasignados = chatsConUserId.map(objeto => objeto.userId);
-        const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending' || null);
+        const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending');
         const idsChatsinasignar = chatsSinUserId.map(objeto => objeto.userId);
         const idsChats =  idsChatasignados.concat(idsChatsinasignar);
         const chatsParaAsignar = idsChats.filter(value => value !== null && value !== 0);
