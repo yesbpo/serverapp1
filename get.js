@@ -145,7 +145,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       console.error('Error en la solicitud:', error);
     }
       // Manejar el error según tus necesidades
-       if(data.payload.conversation && data.payload.pricing){
+    if(data.payload.conversation && data.payload.pricing){
     const datosAInsertar = {
       status: data.payload.type,
       attachments: data.payload.destination,
@@ -199,17 +199,7 @@ console.log(respnse1)
           console.log(responseData)
          
       }
-      
-     } catch (error) {
-      // Maneja cualquier error durante el procesamiento asíncrono
-  
-      res.status(500).send('Error interno del servidor.');
-    }
-    } else {
-     //La solicitud no proviene de Gupshup, responde con un error
-    res.status(403).send('Acceso no autorizado.');
-    }
-     //obtener mensajes
+           //obtener mensajes
      try {
       const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-mensajes', {
         method: 'GET',
@@ -444,6 +434,16 @@ if (chatsSinUserId.length>1) {
   
       // Maneja el error según tus necesidades
     }
+     } catch (error) {
+      // Maneja cualquier error durante el procesamiento asíncrono
+  
+      res.status(500).send('Error interno del servidor.');
+    }
+    } else {
+     //La solicitud no proviene de Gupshup, responde con un error
+    res.status(403).send('Acceso no autorizado.');
+    }
+
   }
   
 
