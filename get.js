@@ -244,7 +244,7 @@ console.log(respnse1)
       chatsvalidados = await existentes.json();
       console.log(chatsvalidados)
       
-      const chatscreados = chatsvalidados.map(chat => chat.idChat2);
+      const chatscreados = Array.isArray(chatsvalidados) ? chatsvalidados.map(chat => chat.idChat2) : [];
       var chatsparacrear = numerosUnicos.map(function (elemento, indice) {
         // Verificar si el índice existe en array2
         if (indice < chatscreados.length) {
