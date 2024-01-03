@@ -171,6 +171,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
 
       const chatlimpio1 = chats.filter(chat=> chat.status == 'closed')
       if(chatlimpio.length === 0){
+        console.log('termino')
         const data3 = {
             
           idChat2: data.payload.source,
