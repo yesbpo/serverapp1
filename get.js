@@ -202,38 +202,38 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       console.log(respnse1)
       
       }
-      const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-      const chats = await responseChat.json();
-      const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
-      const chatlimpio1 = chatlimpio.filter(chat=> chat.status == 'closed')
+     // const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
+     // const chats = await responseChat.json();
+     // const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
+     // const chatlimpio1 = chatlimpio.filter(chat=> chat.status == 'closed')
       
-      if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
-        console.log('entra en if')
+     // if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
+      //  console.log('entra en if')
         
-        console.log('log de obtener',chatlimpio)
+      //  console.log('log de obtener',chatlimpio)
         
-          console.log('entra en if2')
-          const data1 = {
+       //   console.log('entra en if2')
+        //  const data1 = {
             
-           idChat2: chatlimpio[0].idChat2,
-           resolved: false,
-           status: 'pending',
-           userId: 0,
-         };
-         const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
-           method: 'POST',
-           headers: {
-             'Content-Type': 'application/json',
-           },
-           body: JSON.stringify(data1),
-         });  
-         if (!response.ok) {
-           console.log('no exito')       
-         }
-         const responseData = await response.json();
-          console.log(responseData)
+        //   idChat2: chatlimpio[0].idChat2,
+         //  resolved: false,
+          // status: 'pending',
+           //userId: 0,
+         //};
+         //const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+          // method: 'POST',
+          // headers: {
+            // 'Content-Type': 'application/json',
+           //},
+           //body: JSON.stringify(data1),
+         //});  
+         //if (!response.ok) {
+          // console.log('no exito')       
+        // }
+        // const responseData = await response.json();
+         // console.log(responseData)
          
-      }
+      //}
       
      } catch (error) {
       // Maneja cualquier error durante el procesamiento asíncrono
