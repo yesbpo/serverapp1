@@ -226,7 +226,8 @@ console.log(respnse1)
       const mensajes = await response.json();
   
       // Filtra solo los usuarios activos
-      const numerosUnicos = [...new Set(mensajes.map((mensaje) => mensaje.number))];
+      const mensajesEntrantes = mensajes.filter(mensaje=> mensaje.type_comunication=='message')
+      const numerosUnicos = [...new Set(mensajesEntrantes.map((mensaje) => mensaje.number))];
       console.log(numerosUnicos)
       async function normalizarNumero(numero) {
         // Eliminar caracteres no numéricos
@@ -242,7 +243,7 @@ console.log(respnse1)
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
         console.log('chat existente..12');
-        if(chatExistente.idChat2 !== numeroUnico){ 
+        if(chatExistente.idChat2 !== numeroUnico ){ 
           const data2 = {
             // Asigna el valor actual del contador y luego incrementa
            idChat2:numeroNormalizado ,
