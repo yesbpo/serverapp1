@@ -256,12 +256,12 @@ console.log(respnse1)
     });
       //crear chats
       for (const chatparacrear of chatsparacrear) {
-        
+       
         
        
           const data2 = {
             // Asigna el valor actual del contador y luego incrementa
-           idChat2:numeroNormalizado ,
+           idChat2:chatparacrear ,
            resolved: false,
            status: "pending",
            userId: 0,
@@ -306,6 +306,7 @@ console.log(respnse1)
   }  
 }
 // Función para distribuir mensajes equitativamente entre usuarios 
+      //obtener chats
       try {
         const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
         if (!response.ok) {
@@ -332,7 +333,7 @@ console.log(respnse1)
         }
         // Encuentra el valor mínimo en las frecuencias
       console.log("Frecuencia de números:", frecuenciaNumeros);
-      console.log('aqui');
+      console.log(chatsExistentes);
       var elementoSeleccionado;
       // Verifica si chatsSinUserId es un array o no
 if (chatsSinUserId.length>1) { 
@@ -344,7 +345,7 @@ if (chatsSinUserId.length>1) {
 
         // Obtén las frecuencias del valor mínimo
         var frecuenciasMinimas = frecuenciaNumeros[minimoValorFrecuencia];
-        console.log('ingresa')
+        console.log
         // Si hay más de una frecuencia mínima, selecciona un valor al azar
         let elementosSeleccionados = [];
         if (frecuenciasMinimas > 1) {
