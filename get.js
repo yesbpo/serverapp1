@@ -165,6 +165,39 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
        if (!respnseweb.ok) {
         console.log('no exitoso')       
       }
+      const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
+      const chats = await responseChat.json();
+      const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
+      const chatlimpio1 = chatlimpio.filter(chat=> chat.status == 'closed')
+      
+      if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
+        console.log('entra en if')
+        
+        console.log('log de obtener',chatlimpio)
+        
+          console.log('entra en if2')
+          const data1 = {
+            
+           idChat2: chatlimpio[0].idChat2,
+           resolved: false,
+           status: 'pending',
+           userId: 0,
+         };
+         const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(data1),
+         });  
+         if (!response.ok) {
+           console.log('no exito')       
+         }
+         const responseData = await response.json();
+          console.log(responseData)
+         
+      }
+      
       const respnse1 = await respnseweb.json();
       console.log(respnse1)
       
@@ -172,6 +205,8 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
       const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
+      const chatlimpio1 = chatlimpio.filter(chat=> chat.status == 'closed')
+      
       if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
         console.log('entra en if')
         
@@ -250,7 +285,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
         const chatsExistentes = await response.json();
         const chatsConUserId = chatsExistentes.filter(chat => chat.userId!== 0);
         const idsChatasignados = chatsConUserId.map(objeto => objeto.userId);
-        const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending');
+        const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending' || 'closed');
         const idsChatsinasignar = chatsSinUserId.map(objeto => objeto.userId);
         const idsChats =  idsChatasignados.concat(idsChatsinasignar);
         const chatsParaAsignar = idsChats.filter(value => value !== null && value !== 0);
