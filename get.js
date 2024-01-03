@@ -169,6 +169,36 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
           console.log(responseData)
          
       }
+      //chats no creados
+     
+      
+      if(chatlimpio.length === 0){
+        console.log('entra en if')
+        
+        console.log('log de obtener',chatlimpio)
+        
+          console.log('entra en if2')
+          const data1 = {
+            
+           idChat2: data.payload.source,
+           resolved: false,
+           status: 'pending',
+           userId: 0,
+         };
+         const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+           method: 'POST',
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           body: JSON.stringify(data1),
+         });  
+         if (!response.ok) {
+           console.log('no exito')       
+         }
+         const responseData = await response.json();
+          console.log(responseData)
+         
+      }
 
       const datamensaje = await response.json();
       // Manejar la respuesta según tus necesidades
