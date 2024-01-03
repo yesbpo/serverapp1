@@ -81,30 +81,30 @@ app.all('/w/api/index', async (req, res) => {
       console.log(data);
       
       //aqui
-        console.log('entra en if3')
-          const data1 = {
+       // console.log('entra en if3')
+         // const data1 = {
             // Asigna el valor actual del contador y luego incrementa
-           idChat2: data.payload.source,
-           resolved: false,
+           //idChat2: data.payload.source,
+          // resolved: false,
            
            
-         };
-         console.log(data1.idChat2)
-         const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
-           method: 'POST',
-           headers: {
-             'Content-Type': 'application/json',
-           },
-           body: JSON.stringify(data1),
-         });
-         if (!response.ok) {
-           console.log('no exito')       
+         //};
+         //console.log(data1.idChat2)
+         //const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+          // method: 'POST',
+           //headers: {
+            // 'Content-Type': 'application/json',
+           //},
+           //7body: JSON.stringify(data1),
+       //  });
+         //if (!response.ok) {
+          // console.log('no exito')       
          
-         const responseData = await response.json();
-   console.log(responseData)
+       //  const responseData = await response.json();
+   //console.log(responseData)
           
           
-      }
+     // }
       
       const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
