@@ -256,12 +256,12 @@ console.log(respnse1)
     });
       //crear chats
       for (const chatparacrear of chatsparacrear) {
-       
+        const numeroNormalizado = await normalizarNumero(chatparacrear);
         
        
           const data2 = {
             // Asigna el valor actual del contador y luego incrementa
-           idChat2:chatparacrear ,
+           idChat2:numeroNormalizado ,
            resolved: false,
            status: "pending",
            userId: 0,
