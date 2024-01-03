@@ -298,8 +298,148 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
   if (!responseChatExistente.ok) {
     
   }
-  const chatsExistentes = await responseChatExistente.json();
   
+  const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
+        if (!response.ok) { 
+        }
+        const chatsExistentes = await response.json();
+        const chatsConUserId = chatsExistentes.filter(chat => chat.userId!== 0);
+        const idsChatasignados = chatsConUserId.map(objeto => objeto.userId);
+        const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending');
+        const idsChatsinasignar = chatsSinUserId.map(objeto => objeto.userId);
+        const idsChats =  idsChatasignados.concat(idsChatsinasignar);
+        const chatsParaAsignar = idsChats.filter(value => value !== null && value !== 0);
+        const responseUsuarios = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-usuarios');
+        const usuarios = await responseUsuarios.json();   
+        const usuariosActivos = usuarios.filter((usuario) => usuario.session === 'Activo' && usuario.type_user ==='Asesor');
+        const idsUactivos = usuariosActivos.map(objeto => objeto.id);
+        var frecuenciaNumeros = {};
+        chatsParaAsignar.forEach(numero => {
+        frecuenciaNumeros[numero] = (frecuenciaNumeros[numero] || 0) + 1;
+        });
+        if (chatsParaAsignar.length === 0) {
+        elementoSeleccionado = idsUactivos[Math.floor(Math.random() * idsUactivos.length)];
+        }
+        // Encuentra el valor mínimo en las frecuencias
+      console.log("Frecuencia de números:", frecuenciaNumeros);
+      console.log(chatsExistentes);
+      var elementoSeleccionado;
+      // Verifica si chatsSinUserId es un array o no
+if (chatsSinUserId.length>1) { 
+  
+        chatsSinUserId.forEach(async(chat)=>{
+          async function actualizarUsuarioChat(idChat2, nuevoUserId) {
+            try {
+              var valoresFrecuencia = Object.keys(frecuenciaNumeros).map(Number);
+        var minimoValorFrecuencia = Math.min(...valoresFrecuencia);
+
+        // Obtén las frecuencias del valor mínimo
+        var frecuenciasMinimas = frecuenciaNumeros[minimoValorFrecuencia];
+        console.log
+        // Si hay más de una frecuencia mínima, selecciona un valor al azar
+        let elementosSeleccionados = [];
+        if (frecuenciasMinimas > 1) {
+        for (const numero in frecuenciaNumeros) {
+        if (frecuenciaNumeros[numero] === frecuenciasMinimas) {
+            elementosSeleccionados.push(Number(numero));
+            
+        }
+        }
+        
+        elementosSeleccionados = [...new Set(elementosSeleccionados.concat(idsUactivos))];
+        elementosSeleccionados = elementosSeleccionados.filter((valor) => idsUactivos.includes(valor))
+          var indiceAleatorio = Math.floor(Math.random() * elementosSeleccionados.length);
+        elementoSeleccionado = elementosSeleccionados[indiceAleatorio];
+        } else {
+      elementoSeleccionado = minimoValorFrecuencia;
+      }
+        const response = await fetch('https://appcenteryes.appcenteryes.com/db/actualizar-usuario-chat', {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ idChat2, nuevoUserId }),
+              });
+          
+              if (!response.ok) {
+              }
+              console.log('2')
+              const resultado = await response.json();
+              return resultado;
+            } catch (error) {
+  
+              // Puedes lanzar el error nuevamente o manejarlo según tus necesidades
+              throw error;
+            }
+            
+          }
+          console.log('1')
+          // Uso de la función
+          const idChat2 = chat.idChat2;// Reemplaza con el idChat2 correcto
+          const nuevoUserId = idsUactivos[Math.floor(Math.random() * idsUactivos.length)]; // Reemplaza con el nuevo valor de userId
+          
+          try {
+        
+            const resultadoActualizacion = await actualizarUsuarioChat(idChat2, nuevoUserId);
+            console.log(resultadoActualizacion)
+            // Aquí puedes manipular la información del resultado según tus necesidades
+          } catch (error) {
+            // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+  
+          }
+        }
+        )
+    }else {
+    // Lógica para un solo elemento en chatsSinUserId
+  
+
+    try{
+      console.log('si entra')
+    // Lógica para un solo elemento
+    var indiceAleatorio = Math.floor(Math.random() * idsUactivos.length);
+    elementoSeleccionado = idsUactivos[indiceAleatorio];
+    console.log(elementoSeleccionado)
+    const response = await fetch('https://appcenteryes.appcenteryes.com/db/actualizar-usuario-chat', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ idChat2: chatsSinUserId[0].idChat2, nuevoUserId: elementoSeleccionado }),
+    });
+
+    if (!response.ok) {
+      console.log('error')
+    }
+
+    const resultado = await response.json();
+    console.log("exitoso",resultado)
+
+    // Aquí puedes manipular la información del resultado según tus necesidades
+  } catch (error) {
+  
+    // Puedes lanzar el error nuevamente o manejarlo según tus necesidades
+    throw error;
+  }
+}
+       //obtener usuarios activos
+        try {
+          const response = await fetch('http://https://appcenteryes.appcenteryes.com/db/obtener-usuarios', {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              // Agrega cualquier otra cabecera que sea necesaria, como token de autorización, si es aplicable
+            },
+          });
+          if (!response.ok) {
+                      }
+          const usuarios = await response.json();       
+          // Filtra solo los usuarios activos
+          const usuariosActivos = usuarios.filter((usuario) => usuario.session === 'Activo');
+   
+        } catch (error) {
+  
+          // Maneja el error según tus necesidades
+        }
   return chatsExistentes
   } catch (error) {
   
@@ -335,7 +475,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       var elementoSeleccionado;
       // Verifica si chatsSinUserId es un array o no
 if (chatsSinUserId.length>1) { 
-  console.log('Entra')
+  
         chatsSinUserId.forEach(async(chat)=>{
           async function actualizarUsuarioChat(idChat2, nuevoUserId) {
             try {
