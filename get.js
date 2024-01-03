@@ -165,10 +165,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
        if (!respnseweb.ok) {
         console.log('no exitoso')       
       }
-      const responseChat2 = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-      const chats2 = await responseChat.json();
-      const chatlimpio2 = chats.filter(chat=> chat.idChat2 == data.payload.source);
-      
+    
       
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
