@@ -144,12 +144,12 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       
       if(data.type == 'message'){
         console.log('entra en if')
-        
+        singuardar()
         console.log('log de obtener',chatlimpio)
         
           console.log('entra en if2')
           if(chatlimpio[0].status == 'closed'){
-            singuardar()
+            
             const data1 = {
             
               idChat2: chatlimpio[0].idChat2,
