@@ -168,7 +168,8 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
       const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
-      const chatlimpio1 = chatlimpio.filter(chat=> chat.status == 'closed')
+
+      const chatlimpio1 = chats.filter(chat=> chat.status == 'closed')
       
       if(chatlimpio[0].status == 'closed'&& data.type == 'message'){
         console.log('entra en if')
@@ -196,6 +197,26 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
          const responseData = await response.json();
           console.log(responseData)
          
+      }else if(chatlimpio.length === 0){
+        const data3 = {
+            
+          idChat2: data.payload.source,
+          resolved: false,
+          status: 'pending',
+          userId: 0,
+        };
+        const response = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data3),
+        });  
+        if (!response.ok) {
+          console.log('no exito')       
+        }
+        const responseData = await response.json();
+         console.log(responseData)
       }
       
       const respnse1 = await respnseweb.json();
