@@ -388,7 +388,7 @@ if (chatsSinUserId.length>1) {
           try {
         
             const resultadoActualizacion = await actualizarUsuarioChat(idChat2, nuevoUserId);
-  
+            console.log(resultadoActualizacion)
             // Aquí puedes manipular la información del resultado según tus necesidades
           } catch (error) {
             // Manejar el error, por ejemplo, mostrar un mensaje al usuario
