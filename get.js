@@ -191,7 +191,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
              'Content-Type': 'application/json',
            },
            body: JSON.stringify(data1),
-         });
+         });  
          if (!response.ok) {
            console.log('no exito')       
          }
@@ -242,7 +242,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       const existentes = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       let chatsvalidados =[];
       chatsvalidados = await existentes.json();
-      console.log(chatsvalidados)
+      console.log('log',chatsvalidados)
       
       const chatscreados = Array.isArray(chatsvalidados) ? chatsvalidados.map(chat => chat.idChat2) : [];
       var chatsparacrear = numerosUnicos.map(function (elemento, indice) {
