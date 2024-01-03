@@ -235,15 +235,27 @@ console.log(respnse1)
       
         // Si el número tiene 10 dígitos, agregar el prefijo '57'
         const numeroNormalizado = numeroLimpio.length === 10 ? '57' + numeroLimpio : numeroLimpio;
-      
+       
+       
         return numeroNormalizado;
       }
+      const existentes = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
+      const chatsvalidados = await existentes.json()
+      const chatscreados = chatsvalidados.map(chat => chat.idChat2);
+      var chatsparacrear = numerosUnicos.map(function (elemento, indice) {
+        // Verificar si el índice existe en array2
+        if (indice < chatscreados.length) {
+            return elemento - chatscreados[indice];
+        } else {
+            // Si el índice no existe en array2, simplemente devolver el elemento de array1
+            return elemento;
+        }
+    });
       //crear chats
-      for (const numeroUnico of numerosUnicos) {
-        const numeroNormalizado = await normalizarNumero(numeroUnico);
-        const chatExistente = await verificarChatExistente(numeroNormalizado);
-        console.log(chatExistente[0].idChat2, numeroNormalizado);
-        if(chatExistente[0].idChat2 !== numeroNormalizado || chatExistente[0].idChat2 == undefined){ 
+      for (const chatparacrear of chatsparacrear) {
+        const numeroNormalizado = await normalizarNumero(chatparacrear);
+        
+       
           const data2 = {
             // Asigna el valor actual del contador y luego incrementa
            idChat2:numeroNormalizado ,
@@ -262,7 +274,7 @@ console.log(respnse1)
         if (!response2.ok) {
 
           console.log('no exito crear chat1')       
-        }
+        
         const responseData2 = await response2.json();
   console.log('exito1',responseData2)
         }
