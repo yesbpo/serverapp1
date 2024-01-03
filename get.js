@@ -269,42 +269,7 @@ console.log(respnse1)
       }
        
     
-      try {
-        const response12 = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-        const chats = response12.json()
-        const chatspendientes = chats.filter(chat=>chat.status == 'pending');
-        
-       // Inicializa un contador
-      for (const numeroUnico of numerosUnicos) {
-        const numeroNormalizado = await normalizarNumero(numeroUnico);
-        const chatExistente = await verificarChatExistente(numeroNormalizado);
-        console.log('chat existente..1');
-       
-        const data3 = {
-           // Asigna el valor actual del contador y luego incrementa
-          idChat2:numeroNormalizado ,
-          resolved: false,
-         
-        };
-        const response3 = await fetch('https://appcenteryes.appcenteryes.com/db/crear-chat', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data3),
-        });
-        if (!response3.ok) {
-
-          console.log('no exito crear chat2')       
-        }
-        const responseData1 = await response3.json();
-            console.log('exito2',responseData1)
-        }
-        
-        
-      }
-     catch (error) {
-      }
+     
       //validar chats existentes para no repetirlos
       async function verificarChatExistente(numero) {
       const idChat2 = numero; // Reemplaza esto con el valor real que deseas buscar
