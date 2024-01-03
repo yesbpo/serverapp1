@@ -335,6 +335,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
       var elementoSeleccionado;
       // Verifica si chatsSinUserId es un array o no
 if (chatsSinUserId.length>1) { 
+  console.log('Entra')
         chatsSinUserId.forEach(async(chat)=>{
           async function actualizarUsuarioChat(idChat2, nuevoUserId) {
             try {
