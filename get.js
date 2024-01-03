@@ -138,33 +138,6 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
         console.error('Error en la solicitud:', response);
         throw new Error('Error en la solicitud');
       }
-    
-      const datamensaje = await response.json();
-      // Manejar la respuesta según tus necesidades
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-    }
-      // Manejar el error según tus necesidades
-    if(data.payload.conversation && data.payload.pricing){
-    const datosAInsertar = {
-      status: data.payload.type,
-      attachments: data.payload.destination,
-      message: data.payload.conversation.id,
-      timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
-      idmessageTemplate: data.payload.id
-    };
-      const respnseweb = await fetch("https://appcenteryes.appcenteryes.com/db/insertar-datos-template", {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json'
-           // Puedes agregar más encabezados según sea necesario
-         },
-         body: JSON.stringify(datosAInsertar)
-         
-       })
-       if (!respnseweb.ok) {
-        console.log('no exitoso')       
-      }
       const responseChat = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
       const chats = await responseChat.json();
       const chatlimpio = chats.filter(chat=> chat.idChat2 == data.payload.source);
@@ -196,7 +169,34 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
           console.log(responseData)
          
       }
-      
+
+      const datamensaje = await response.json();
+      // Manejar la respuesta según tus necesidades
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+    }
+      // Manejar el error según tus necesidades
+    if(data.payload.conversation && data.payload.pricing){
+    const datosAInsertar = {
+      status: data.payload.type,
+      attachments: data.payload.destination,
+      message: data.payload.conversation.id,
+      timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
+      idmessageTemplate: data.payload.id
+    };
+      const respnseweb = await fetch("https://appcenteryes.appcenteryes.com/db/insertar-datos-template", {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json'
+           // Puedes agregar más encabezados según sea necesario
+         },
+         body: JSON.stringify(datosAInsertar)
+         
+       })
+       if (!respnseweb.ok) {
+        console.log('no exitoso')       
+      }
+            
       const respnse1 = await respnseweb.json();
       console.log(respnse1)
       
