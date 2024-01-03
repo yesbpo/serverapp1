@@ -178,7 +178,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
         console.log('log de obtener',chatlimpio)
         
           console.log('entra en if2')
-          const data1 = {
+          const data5 = {
             
            idChat2: data.payload.source,
            resolved: false,
@@ -190,7 +190,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
            headers: {
              'Content-Type': 'application/json',
            },
-           body: JSON.stringify(data1),
+           body: JSON.stringify(data5),
          });  
          if (!response.ok) {
            console.log('no exito')       
