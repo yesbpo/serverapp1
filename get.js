@@ -371,6 +371,7 @@ if (chatsSinUserId.length>1) {
           
               if (!response.ok) {
               }
+              console.log('2')
               const resultado = await response.json();
               return resultado;
             } catch (error) {
@@ -380,7 +381,7 @@ if (chatsSinUserId.length>1) {
             }
             
           }
-        
+          console.log('1')
           // Uso de la función
           const idChat2 = chat.idChat2;// Reemplaza con el idChat2 correcto
           const nuevoUserId = idsUactivos[Math.floor(Math.random() * idsUactivos.length)]; // Reemplaza con el nuevo valor de userId
