@@ -149,6 +149,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
         
           console.log('entra en if2')
           if(chatlimpio[0].status == 'closed'){
+            singuardar()
             const data1 = {
             
               idChat2: chatlimpio[0].idChat2,
@@ -168,7 +169,8 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
             }
 
           }
-          else if(chatlimpio.length === 0){
+          async function singuardar (){
+          if(chatlimpio.length === 0){
             console.log('entra en if33')
             
             console.log('log de obtener33',chatlimpio)
@@ -198,7 +200,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
          const responseData = await response.json();
           console.log(responseData)
          
-      }
+      }}
       //chats no creados
       
 
