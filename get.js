@@ -242,7 +242,7 @@ console.log(respnse1)
       for (const numeroUnico of numerosUnicos) {
         const numeroNormalizado = await normalizarNumero(numeroUnico);
         const chatExistente = await verificarChatExistente(numeroNormalizado);
-        console.log('chat existente..12');
+        console.log(chatExistente.idChat2, numeroNormalizado);
         if(chatExistente.idChat2 !== numeroNormalizado){ 
           const data2 = {
             // Asigna el valor actual del contador y luego incrementa
