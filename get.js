@@ -240,8 +240,11 @@ console.log(respnse1)
         return numeroNormalizado;
       }
       const existentes = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-      const chatsvalidados = await existentes.json();
+    let chatsvalidados = await existentes.json();
       console.log(chatsvalidados)
+      if(chatsvalidados.length == 0){
+        return chatsvalidados = [];
+      }
       const chatscreados = chatsvalidados.map(chat => chat.idChat2);
       var chatsparacrear = numerosUnicos.map(function (elemento, indice) {
         // Verificar si el índice existe en array2
