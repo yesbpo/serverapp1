@@ -318,7 +318,7 @@ const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZo
         const chatsExistentes = await response.json();
         const chatsConUserId = chatsExistentes.filter(chat => chat.userId!== 0);
         const idsChatasignados = chatsConUserId.map(objeto => objeto.userId);
-        const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending' || 'closed');
+        const chatsSinUserId = chatsExistentes.filter(chat => chat.userId == 0 && chat.status == 'pending');
         const idsChatsinasignar = chatsSinUserId.map(objeto => objeto.userId);
         const idsChats =  idsChatasignados.concat(idsChatsinasignar);
         const chatsParaAsignar = idsChats.filter(value => value !== null && value !== 0);
