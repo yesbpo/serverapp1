@@ -235,9 +235,16 @@ app.post('/db/crear-chat', async (req, res) => {
 
     // Si chatsData no es una matriz, conviértelo en una matriz para manejar un solo objeto
     const chatsArray = Array.isArray(chatsData) ? chatsData : [chatsData];
-
+    const fechaActual = new Date();
+          const options = { timeZone: 'America/Bogota', hour12: false };
+          const anio = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+          const mes = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+          const dia = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+          const hora = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+          const minutos = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+          const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
     for (const chat of chatsArray) {
-      const { resolved, status, userId, idChat2 } = chat;
+      const { assignedDate =`${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`, receivedDate =`${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`, resolved, status, userId, idChat2 } = chat;
 
       // Verificar si ya existe un chat con el mismo idChat2
       const [existingResult] = await promisePool.execute(
@@ -249,14 +256,14 @@ app.post('/db/crear-chat', async (req, res) => {
         // Si ya existe, actualiza los demás datos
         
         await promisePool.execute(
-          'UPDATE Chat SET resolved = ?, status = ?, userId = ? WHERE idChat2 = ?',
-          [resolved, status, userId, idChat2]
+          'UPDATE Chat SET  receivedDate = ?, resolved = ?, status = ?, userId = ? WHERE idChat2 = ?',
+          [ receivedDate ,resolved, status, userId, idChat2]
         );
       } else {
         // Si no existe, inserta un nuevo chat
         await promisePool.execute(
-          'INSERT INTO Chat (receivedDate, assignedDate, attendedDate, closedDate, resolved, status, userId, idChat2) VALUES ( NOW(), NOW(), null, null, ?, ?, ?, ?)',
-          [resolved, status, userId, idChat2]
+          'INSERT INTO Chat (receivedDate, assignedDate, attendedDate, closedDate, resolved, status, userId, idChat2) VALUES ( ?, ?, null, null, ?, ?, ?, ?)',
+          [assignedDate, receivedDate ,resolved, status, userId, idChat2]
         );
       }
     }
