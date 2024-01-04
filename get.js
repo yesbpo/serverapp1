@@ -371,7 +371,7 @@ if (chatsSinUserId.length>1) {
                 headers: {
                   'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ idChat2, nuevoUserId }),
+                body: JSON.stringify({ idChat2, nuevoUserId}),
               });
           
               if (!response.ok) {
