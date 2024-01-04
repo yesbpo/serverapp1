@@ -272,18 +272,23 @@ app.put('/db/actualizar-usuario-chat', async (req, res) => {
   try {
     const idChat2 = req.body.idChat2; // Se espera que el idChat2 sea proporcionado en el cuerpo de la solicitud
     const nuevoUserId = req.body.nuevoUserId; // Nuevo valor de userId que se proporcionará en el cuerpo de la solicitud
-
+    const fechaActual = new Date();
+    const options = { timeZone: 'America/Bogota', hour12: false };
+    const anio = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+    const mes = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+    const dia = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+    const hora = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+    const minutos = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+    const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+    const assignedDate = `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`
     // Obtener el estado actual del chat
     const [chatResult] = await promisePool.execute('SELECT status FROM Chat WHERE idChat2 = ?', [idChat2]);
-
     if (chatResult.length === 0) {
       // Si no se encuentra el chat, devolver un mensaje de error
       res.status(404).json({ error: 'Chat no encontrado' });
       return;
     }
-
     const chatStatus = chatResult[0].status;
-
     // Validar que el estado del chat sea 'pending' antes de continuar
     if (chatStatus !== 'pending') {
       res.status(400).json({ error: 'No se puede asignar un chat que no está en estado "pending"' });
@@ -291,7 +296,7 @@ app.put('/db/actualizar-usuario-chat', async (req, res) => {
     }
 
     // Realiza la consulta SQL para actualizar el userId del chat por idChat2
-    const [updateResult] = await promisePool.execute('UPDATE Chat SET userId = ?, assignedDate = NOW() WHERE idChat2 = ?', [nuevoUserId, idChat2]);
+    const [updateResult] = await promisePool.execute('UPDATE Chat SET userId = ?, assignedDate = ? WHERE idChat2 = ?', [nuevoUserId, idChat2, assignedDate]);
 
     if (updateResult.affectedRows > 0) {
       // Si se actualiza con éxito, devolver una respuesta exitosa
