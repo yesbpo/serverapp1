@@ -296,7 +296,7 @@ app.put('/db/actualizar-usuario-chat', async (req, res) => {
     }
 
     // Realiza la consulta SQL para actualizar el userId del chat por idChat2
-    const [updateResult] = await promisePool.execute('UPDATE Chat SET userId = ?, assignedDate = ? WHERE idChat2 = ?', [nuevoUserId, idChat2, assignedDate]);
+    const [updateResult] = await promisePool.execute('UPDATE Chat SET userId = ?, assignedDate = ? WHERE idChat2 = ?', [nuevoUserId, assignedDate, idChat2]);
 
     if (updateResult.affectedRows > 0) {
       // Si se actualiza con éxito, devolver una respuesta exitosa
