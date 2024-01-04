@@ -36,32 +36,30 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+const directorioCargas = 'uploads'; // Carpeta para almacenar los archivos cargados
+
+// Configuración de Multer para manejar la carga de archivos
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, 'uploads');
-    fs.mkdirSync(uploadPath, { recursive: true });
-    cb(null, uploadPath);
+    cb(null, directorioCargas);
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, file.originalname); // Puedes ajustar la lógica del nombre de archivo según tus necesidades
   },
 });
 
-const upload = multer({ storage });
-app.post('/w/upload', upload.single('file'), (req, res) => {
-  // La carga de archivos se maneja aquí
-  const uploadedFile = req.file;
+const upload = multer({ storage: storage });
 
-  if (!uploadedFile) {
-    return res.status(400).send('No se proporcionó ningún archivo.');
-  }
-
-  // Construir la URL basada en la ubicación del archivo y el nombre de dominio
-  const fileUrl = `https://appcenteryes.appcenteryes.com/w/uploads/${uploadedFile.filename}`;
-
-  // Devolver la URL como respuesta
-  res.send(`URL del archivo: ${fileUrl}`);
+// Ruta para manejar la carga de archivos desde el cliente
+app.post('/w/subir-archivo', upload.single('archivo'), (req, res) => {
+  // Aquí deberías generar la URL del archivo y enviarla como respuesta al cliente
+  const urlArchivo = `https://appcenteryes.appcenteryes.com/${directorioCargas}/${req.file.filename}`;
+  res.json({ url: urlArchivo });
 });
+
+// Ruta para servir los archivos estáticos
+app.use(`/${directorioCargas}`, express.static(path.join(__dirname, directorioCargas)));
+
 
 
 io.on('connection', (socket) => {
@@ -426,6 +424,7 @@ if (chatsSinUserId.length>1) {
 
     const resultado = await response.json();
     console.log("exitoso",resultado)
+    console.log("exitoso",resultado)
 
     // Aquí puedes manipular la información del resultado según tus necesidades
   } catch (error) {
@@ -558,7 +557,7 @@ if (chatsSinUserId.length>1) {
 
         // Obtén las frecuencias del valor mínimo
         var frecuenciasMinimas = frecuenciaNumeros[minimoValorFrecuencia];
-        console.log
+      
         // Si hay más de una frecuencia mínima, selecciona un valor al azar
         let elementosSeleccionados = [];
         if (frecuenciasMinimas > 1) {
