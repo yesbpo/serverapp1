@@ -10,6 +10,7 @@ const socketIo = require('socket.io');
 const app = express();
 const port = 8080;
 const multer = require('multer');
+const path = require('path');
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
