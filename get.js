@@ -59,7 +59,7 @@ app.post('/w/subir-archivo', upload.single('archivo'), (req, res) => {
 });
 
 // Ruta para servir los archivos estáticos
-app.use(`/W/${directorioCargas}`, express.static(path.join(__dirname, directorioCargas)));
+app.use(`/w/${directorioCargas}`, express.static(path.join(__dirname, directorioCargas)));
 
 
 
