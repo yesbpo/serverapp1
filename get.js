@@ -54,12 +54,12 @@ const upload = multer({ storage: storage });
 // Ruta para manejar la carga de archivos desde el cliente
 app.post('/w/subir-archivo', upload.single('archivo'), (req, res) => {
   // Aquí deberías generar la URL del archivo y enviarla como respuesta al cliente
-  const urlArchivo = `https://appcenteryes.appcenteryes.com/w${directorioCargas}/${req.file.filename}`;
+  const urlArchivo = `/w/uploads/${req.file.filename}`;
   res.json({ url: urlArchivo });
 });
 
 // Ruta para servir los archivos estáticos
-app.use(`/w/${directorioCargas}`, express.static(path.join(__dirname, directorioCargas)));
+app.use('/w/uploads', express.static(directorioCargas));
 
 
 
