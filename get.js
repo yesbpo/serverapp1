@@ -37,7 +37,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-const directorioCargas = path.join(__dirname, 'uploads'); // Carpeta para almacenar los archivos cargados
+const directorioCargas =   path.join(__dirname, '..', 'uploads'); // Carpeta para almacenar los archivos cargados
 
 // Configuración de Multer para manejar la carga de archivos
 const storage = multer.diskStorage({
