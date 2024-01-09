@@ -20,7 +20,7 @@ const io = socketIo(server, {
 });
 const apiUrl = 'https://api.gupshup.io/sm/api/v1/template/list/YESVARIOS';
 const apiUrlenvio = 'https://api.gupshup.io/sm/api/v1/msg';
-const apiKey = '6ovjpik6ouhlyoalchzu4r2csmeqwlbg';
+const apiKey = 'thpuawjbidnbbbfrp9bw7qg03eci6rdz';
 const apiUrluser = 'https://api.gupshup.io/sm/api/v1/users/YESVARIOS';
 const apiUrlPartnertoken = 'https://partner.gupshup.io/partner/account/login';
 app.use(cors({ origin: '*' }));
@@ -617,7 +617,7 @@ if (chatsSinUserId.length>1) {
   
 
     try{
-      console.log('si entra')
+      
     // Lógica para un solo elemento
     var indiceAleatorio = Math.floor(Math.random() * idsUactivos.length);
     elementoSeleccionado = idsUactivos[indiceAleatorio];
